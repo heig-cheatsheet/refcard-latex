@@ -13,10 +13,13 @@
 \usepackage{stix}
 \usepackage{listings}
 \usepackage{multirow}
+\usepackage{float}
 \usepackage{titlesec}
 \usepackage{fancyvrb,cprotect}
 \usepackage{graphicx}
-
+\usepackage{fontspec}
+\usepackage{booktabs}
+\usepackage{amsmath}
 \input{revision}
 
 \ifdefined\tinted
@@ -28,7 +31,7 @@
 
 % Highlight configuration for C programming language
 \lstset{
-  language=python,
+  language=tex,
   breaklines=true,
   keywordstyle=\bfseries\color{black},
   basicstyle=\ttfamily\color{black},
@@ -74,582 +77,227 @@
 
 \begin{document}
 
-\begin{multicols*}{4}
+\begin{multicols*}{3}
 \begin{tabularx}{\columnwidth}{lX}
     \raisebox{-\totalheight}{\includegraphics[width=1cm]{assets/heig-vd-black.pdf}} &
 \begin{center}
-  {\Large \bf Carte de référence Python 3.x} \\
+  {\Large \bf Carte de référence \LaTeX} \\
   version \revision \ -- \revisiondate \\
 \end{center}
 \end{tabularx}
 {
 \scriptsize
-Cette carte de référence peut être utilisée durant les travaux écrits
-des cours utilisant \emph{python} à moins que le contraire ne soit explicitement formulé par l'enseignant. Cette carte comprend une liste non exhaustive des possibilités du langage Python 3 résumé en une feuille A4 recto-verso. Ce document est en partie inspiré de \emph{Learn X in Y}.
+Cette carte de référence est destinée aux étudiants utilisant \LaTeX2e pour leurs rapports de travaux pratiques ou rapports de travail de Bachelor. Cette carte comprend une liste non exhaustive des possibilités du langage \LaTeX résumé en une feuille A4 recto-verso. Ce document est en partie inspiré de \emph{Learn X in Y}.
 
 }
-\section*{Différences entre Python 2.x et Python 3.x}
-Python 2 est obsolète depuis le 1er janvier 2020. 
+\section*{Classes de document}
 \begin{lstlisting}
-# Python 3.x                 # Python 2.x
-print('hello')               print 'hello'
-2/3 == 0.66                  2/3 = 0
-"unicode"                    u"unicode"
-range(1,2)                   xrange(1,2)
-raise Exception("error")     raise "error"
+\documentclass[11pt,a4paper,landscape,twoside]{article}
+\documentclass{report} % Dispose de \chapter
+\documentclass{book}   % Dispose de \frontmatter \mainmatter et \backmatter
 
-from __future__ import print_function
+\documentclass{memoir} % Pour écrire une thèse de doctorat
+\documentclass{beamer} % Pour faire des présentation type PPT
+\documentclass{exam}   % Pour écrire des travaux écrits/examens
+\documentclass{lettre} % Modèle de l'observatoire de Genève pour écrire des lettres.
 \end{lstlisting}
 
-\section*{Opérateurs et généralités}
+\section*{Paquets}
 
 \begin{lstlisting}
-5.0 // 3                # => 1 Division entière
-7 % 3                   # => 2 Modulo
-2**4                    # => 16 Exponentation
-not True == False       # => True (Valeurs booléeenes)
-True and False or False # => True 
-0 and 2                 # => 0 (Op. logiques sur int)
-0 == False              # => False 
-1 != 1                  # => False (Inégalités)
-1 < 2 < 3               # => True (Chaînage)
-None                    # Un objet de type None
-"etc" is None           # => False
-None is None            # => True
-bool(0)                 # => False
-bool("")                # => False
-[]                      # Liste 
-()                      # Tuple 
-{}                      # Dictionnaire
-""                      # Chaîne de caractères
-''                      # Chaîne de caractères
+\usepackage{caption}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{xifthen}
+\usepackage{hyperref}
+\usepackage{fancyhdr}
+\usepackage{bookmark}
+\usepackage{geometry}
+\usepackage{setspace}
+\usepackage{babel}
 \end{lstlisting}
 
-\section*{Initialisations}
+\section*{Formats}
+\begin{lstlisting}
+
+\chapter[Description courte]{Description longue}
+\section{Section 1}
+\subsection{Section 1.1}
+\subsubsection{Section 1.1.1}
+\paragraph{Section 1.1.1.1}
+\label{subsec:foobar}
+Comme vu au paragraphe \ref{subsec:foobar}
+
+\textbf{Texte en gras}
+\textit{Texte en italique}
+\texttt{Texte en couleur}
+\textsc{Texte en souligné}
+\textup{Texte en exposant}
+\textsl{Texte en italique souligné}
+\textsf{Texte en gras souligné}
+
+\begin{enumerate} % Liste numérotée
+    \item Salade
+    \item Melon
+    \item Durian
+\end{enumerate}
+
+\begin{itemize} % Liste à puces
+    \item Un
+    \item Deux
+    \item Trois
+\end{itemize}
+\end{lstlisting}
+\section*{Minimal}
 
 \begin{lstlisting}
-i = 42 + 2j       # Init une var complexe
-type(i)           # => <class 'complex'>
-a = [1, 2, 3, 4]  # Nouvelle instance de liste 
-b = a             # Référence vers la même liste
-b is a            # => True (b pointe sur a)
-b == a            # => True (objets a et b égaux)
-c = a[:]          # Copie de la liste
-c is a            # => False (c pas référence sur a)
-d = a.copy()      # Autre manière de copier une liste
-\end{lstlisting}
+\documentclass[a4paper,11pt]{article}
+\usepackage[french]{babel}
 
-\section*{Chaînes de caractères}
-
-\begin{lstlisting}
-"Hello, World!"        # Guillemets doubles
-'Hello, World, too!'   # Guillemets simples
-"""Multi 
-Ligne"""               # Aussi utilisé pour la doc
-"Carottes " + "Cuites" # => "Carottes Cuites"
-"A" "B"                # => "AB"
-"Trois" * 3            # => "TroisTroisTrois"
-"Webb"[0]              # => "W"
-"{}!={}".format("Python", "Java") # => "Python!=Java"
-"{name} {eat}".format(name="Bob", eat="pizza") 
-# => "Bob pizza"
-"{1} {0} {0} {1}".format("b", "a") # => "a b b a"
-name = r"\r\ea"          # Caractères non échappés
-"%s %d" % ("Hello", 42)  # => "Hello 42"
-f"Bonjour {name}!"       # => "Bonjour Bob!"
-print("Hello", end="!")  # => "Hello!"
-print("Hello", )         # => "Hello" sans \n
-print("Hello")           # => "Hello\n"
-print("Error", file=sys.stderr) # sur stderr 
-','.join(["a", "b", "c"]) # => "a,b,c"
-"foobar".upper() # => "FOOBAR"
-"FOOBAR".lower() # => "foobar"
-"foobar".capitalize() # => "Foobar"
-"un chat gris".title() # => "Un chat gris"
-
-\end{lstlisting}
-
-\section*{Listes}
-Une liste est un tableau dynamique d'objets
-\begin{lstlisting}
-a = []              # Nouvelle instance de liste vide
-len(a)              # => 0
-a.append(1)         # a = [1]
-a.append(2)         # a = [1, 2]
-a.append(3, 4)      # a = [1, 2, 3, 4]
-a.pop()             # a = [4], retourne 3
-a[0]                # => 1
-a[-1]               # => 3 (en partant de la fin)
-a[42]               # => IndexError
-a[0:3]              # => [1, 2, 3]
-a[0:3:1]            # => [1, 2, 3]
-a[0:]               # de 0 à la fin
-a[:2]               # du début à 2
-a[::2]              # Un élément sur 2
-a[::-1]             # Inverse la liste
-del a[0]            # a = [2] (supprime 1)
-b = [4] + [5, 6]    # b = [4, 5, 6]
-a + b                       # => [1, 2, 3, 4, 5, 6]
-b.extend([8, 9])            # b = [4, 5, 6, 8, 9]
-1 in a                      # => True
-a = [1, 3.15, "Hu", [1, 2]] # Liste composite
-a, b, c = [1, 2, 3]         # a = 1, b = 2, c = 3
-a, b = b, a                 # a = 2, b = 1
-\end{lstlisting}
-
-\section*{Tuples}
-Un tuple est une liste non modifiable et donc hashable utilisable comme clé dans un dictionnaire.
-\begin{lstlisting}
-a = (1, 2, 3)  # Nouvelle instance de tuple
-a[0]           # => 1
-a[0] = 42      # TypeError
-hash(a)        # 529344067295497451
-\end{lstlisting}
-
-\section*{Dictionnaires}
-Un dictionnaire est un hashmap : une collection de paires, valeurs.
-\begin{lstlisting}
-a = {}                      # New instance de dict
-a["key"] = "value"          # Ajoute un élément
-b = {"key": "value"}        # ... autre méthode
-invalid = {[1,2]: "value"}  # TypeError
-valid = {(1,2): "value"}    # Ok
-list(a.keys())              # => ["key"]
-list(a.values())            # => ["value"]
-a['oops']                   # KeyError
-a.get("oops")               # => None
-a.get("oops", "default")    # => "default"
-u = {'bob': 42, 'alice': 43}
-u.items() # => dict_item([('bob', 42), ('alice', 43)])
-\end{lstlisting}
-
-\section*{Sets}
-Un set est une collection de valeurs uniques, sans ordre.
-\begin{lstlisting}
-a = set()      # Nouvelle instance de set
-a.add(1)       # a = {1}
-a.add(2)       # a = {1, 2}
-a.add(2)       # a = {1, 2} Déjà dans a
-b = {2, 5, 7}  # Nouvelle instance de set
-a.union(b)     # => {1, 2, 5, 7}
-a & b          # => {2} Intersection
-a | b          # => {1, 2, 5, 7} Union
-a - b          # => {1} Différence
-1 in a         # => False
-\end{lstlisting}
-
-\section*{Structures de contrôle}
-\begin{lstlisting}
-x = 42
-if x > 10: # Conditionnel if-elif-else
-    print("x est supérieur à 10")
-elif x > 5:
-    print("x est supérieur à 5")
-else:
-    print("x est inférieur ou égal à 5")
-
-for animal in ["chat", "chien", "oiseau"]:
-    print(f"Un {animal} est un mammifère")
-
-for i in range(4): print(i, end=" ") # 0 1 2 3 4
-for i in range(4, 8): print(i, end=" ") # 4 5 6 7
-for i in range(0, 10, 2): print(i, end=" ") # 0 2 4 6 8
-
-animaux = ["chat", "chien", "oiseau"]
-for i, animal in enumerate(animaux):
-    print(f"{i}: {animal}")
-# 0: chat 1: chien 2: oiseau
-
-d = {"c": 1, "b": 2, "a": 3}
-for key in d: print(key) # c b a
-for key in sorted(d): print(key) # a b c
-for k, v in d.items(): print(k, v) # a 3 b 2 c 1
-i = 0
-while i < 4: print(i := i + 1) # 1 2 3 4
-  
-# Switch (Python >= 3.10)
-status = 400
-match status:
-  case 200: print("OK")
-  case 400: print("Bad Request")  
-  case 404: print("Not Found")
-  case k 
-  case _: print("Status inconnu") # Default      
-\end{lstlisting}
-
-\section*{Fonctions}
-\begin{lstlisting}
-def foo: 
-    pass # Pass est un mot clé qui ne fait rien
-
-def add(a, b, c): # a, b, c sont des paramètres
-    return a + b + c
-
-def add(a, b, c=0): # Paramètre optionnel
-    return a + b + c
-
-def add(a, b, *args): # Paramètre de type tuple
-    return a + b + sum(args)
-
-def display(*args): 
-    for arg in args: print(arg) 
-
-def display(**kwargs): # dict en entrée
-    for key, value in kwargs.items(): print(key, value)
-
-def bar(a, b=0, *args, **kwargs):
-    print(a, b, args, kwargs) 
-bar(1, 2, 3, c=9, d=(1,2)) 
-# => 1 2 (3,) {'c': 9, 'd': (1, 2)}
-
-f = lambda x, y: x + y # Fonctions anonymes
-f(1, 2)                # => 3
-def iterate(x, f):
-    for i in range(x):
-        f(i)
-iterate(3, lambda i: print(i)) # => 0 1 2
-
-(lambda x: x > 2)(3)                 # => True
-(lambda x, y: x ** 2 + y ** 2)(2, 3) # => 5
-
-x = 0 # Scope global (mauvaise pratique)
-def foo():
-    global x                  # ... pas bien.
-    x = 42
-foo() # x => 42
-
-def foo():                    # Fonctions imbriquées
-    def bar():
-        print("bar")
-    bar()
-
-def double_numbers(iterable): # Générateur
-for i in iterable:
-    yield i + i
-
-# Annotation de fonction (Python >= 3.8)
-def add(x: float, y: int) -> tuple:
-    return (x, y, x + y)
-\end{lstlisting}
-
-\section*{Fichiers}
-\begin{lstlisting}
-# Ouverture d'un fichier
-with open("file.txt", "r") as fp:
-    for line in fp:
-        print(line) # Affiche chaque ligne
-# r: lecture seule, w: écriture seule, a: écriture à la suite
-# b, mode binaire (rb, wb, ...)
-# t, mode texte (rt, wt, ...)
-# +, mode plus (r+, w+, ...)
-# U, mode UTF-8 (rU, wU, ...)
-fp = open("foo.txt", "w") # Mauvaise pratique
-\end{lstlisting}
-
-\section*{Exceptions}
-\begin{lstlisting}
-try: 
-    # Code susceptible d'échouer
-except Exception as e: 
-    # Code exécuté en cas d'erreur
-else: 
-    # Code exécuté en cas de succès
-finally: 
-    # Code exécuté quelque soit le résultat
-\end{lstlisting}
-
-\section*{Compréhensions}
-\begin{lstlisting}[mathescape]
-[2 ** x for x in range(5)]    # => [1, 2, 4, 8, 16]
-{x for x in range(5)}         # => {0, 1, 2, 3, 4}
-{x: 5 ** x for x in range(2)} # => {0: 1, 1: 5}
-[x for x in range(5) if x % 2 == 0] # => [0, 2, 4]
-
-# Générateur sous forme de compréhension      
-values = (-x for x in [1,2,3,4,5])
-
-[(temp * 9/5) + 32 for temp in ctemps] # ${^\circ}$C -> ${^\circ}$F
+\author{Yves Chevallier}
+\date{\today}
+\title{Apprendre \LaTeX{} avec plaisir}
+\begin{document}
+\maketitle
+\newpage
+\tableofcontents
+\section{Introduction}
+Bonjour.
 \end{lstlisting}
 
 \section*{Math}
-\begin{lstlisting}
-import math
-math.sqrt(16)         # => 4.0
-math.sin(math.pi / 2) # => 1.0
-math.perm(5, 3)       # => 120
-math.factorial(25)    # => 15511210043330985984000000 
-math.gcd(3912, 4830)  # => 6
-\end{lstlisting}
 
-\section*{Classes}
-\begin{lstlisting}
-class Human: # Instance de type 
-    # Shared class attribute by all instances
-    species = "Homo Sapiens" 
+\begin{tabularx}{\columnwidth}{Xl}
+    \lstinline{a^2 + b^2 = c^2} & $a^2 + b^2 = c^2$ \\
+\end{tabularx}
 
-    # Initialiseur (appelé à l'instanciation)
-    def __init__(self, name):
-        self.name = name # Propriété publique
-        self._age = 0 # Propriété cachée
-    def say(self, msg):
-        print(f"{self.name}: {msg}")
-    def sing(self):
-        return 'yo... yo... microphone check...'  
-    @classmethod # Partagée par toutes les instances
-    def get_species(cls):
-        return cls.species
-    @staticmethod # Méthode sans références
-    def grunt():
-        print("*grunt*")
-    @property     # Getter
-    def age(self):
-        return self._age
-    @age.setter   # Setter 
-    def age(self, value):
-        if value < 0:
-            raise ValueError("Age non valide")
-        self._age = value
-    @age.deleter # Suppresseur 
-    def age(self):
-        raise AttributeError("Age non supprimable")
-    # Methodes magiques
-    def __str__(self):
-        return f"{self.name} ({self.age})"
-    def __repr__(self):
-        return f"Human('{self.name}', {self.age})"
-    def __len__(self):
-        return len(self.name)
+\begin{multicols*}{2}
 
-class Supehero(Human): # Héritage
-    species = "Super Homme"
-
-    def __init__(self, name, movie=False,
-        superpowers=["strength", "bulletproofing"]):
-        self.fictional = True 
-        self.movie = movie
-        self.superpowers = superpowers
-        super().__init__(name) # Human __init__ 
-
-    def sing(self): # Surcharge de sing
-        return 'Dun, dun, DUN!'
-
-class Batman(Human, Superhero): # Héritage multiple
-    def __init__(self, *args, **kwargs):
-        Superhero.__init__(self, None, movie=True,
-            superpowers=['Wealthy'], *args, **kwargs)
-        Bat.__init__(self, *args, can_fly=False, 
-            **kwargs)
-
-        # override the value for the name attribute
-        self.name = 'Sad Affleck'
-\end{lstlisting}
-
-\section*{Décorateurs}
-\begin{lstlisting}
-from functools import wraps
-def beg(target_function):
-    @wraps(target_function)
-    def wrapper(*args, **kwargs):
-        msg, say_please = target_function(*args, **kwargs)
-        if say_please:
-            return "{} {}".format(msg, "Please! I am poor :(")
-        return msg
-    return wrapper
-
-@beg
-def say(say_please=False):
-    msg = "Can you buy me a beer?"
-    return msg, say_please
-
-print(say())                 # Can you buy me a beer?
-print(say(say_please=True))  # Please! I am poor :(
-\end{lstlisting}
-
-\section*{Loggeur et traceurs}
-\begin{lstlisting}
-import logging
-logging.warning('Watch out!')  # Sur la console
-logging.info('I told you so')  # N'affiche rien 
-
-logging.basicConfig(filename='example.log', 
-    encoding='utf-8', level=logging.DEBUG)
-logging.debug('Un message')
-
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.DEBUG) 
-
-formatter = logging.Formatter('%(asctime)s - %(name)s'
-    ' - %(levelname)s - %(message)s')
-logger.setFormatter(formatter)
-logger.addHandler(logging.StreamHandler()) 
-
-\end{lstlisting}
-
-\section*{Singleton}
-\begin{lstlisting}
-class Singleton(type):
-_instances = {}
-def __call__(cls, *args, **kwargs):
-    if cls not in cls._instances:
-        cls._instances[cls] = super(Singleton, cls).__call__(*args, **kwargs)
-    return cls._instances[cls]
-class MyClass(BaseClass, metaclass=Singleton):
-    pass
-\end{lstlisting}
-
-\section*{Opérations sur les listes}
-\begin{lstlisting}
-enumerate(liste) # Renvoie un tuple (index, element)
-list(enumerate(liste)) # Renvoie une liste de tuples
-zip([1,2,3], [4,5,6]) # => [(1, 4), (2, 5), (3, 6)]
-u = enumerate(zip([1,2,3], [4,5,6])) 
-# => [(0, (1, 4)), (1, (2, 5)), (2, (3, 6))]
-for i, (x, y) in u:
-    print(i, x, y)
-
-filter(lambda x: x % 2 == 0, [1,2,3,4,5]) # => [2, 4]
-\end{lstlisting}
-
-\section*{Import et modules}
-\begin{lstlisting}
-from math import sqrt, prod  # Bonne pratique
-from math import *           # Mauvaise pratique
-
-# Comportement par défaut à l'appel du script
-if __name__ == '__main__':
-    main()
-\end{lstlisting}
-
-\section*{Modules}
-\begin{description}
-\item[beautifulsoup4] pour manipuler des pages web
-\item[flask] framework pour créer des applications web
-\item[functools] pour manipuler des fonctions
-\item[itertools] pour manipuler des itérateurs
-\item[jinja] moteur de template
-\item[matplotlib] pour créer des graphiques
-\item[numpy] pour manipuler des tableaux
-\item[opencv] pour manipuler des images
-\item[pandas] pour manipuler des données
-\item[pillow] pour manipuler des images
-\item[pint] pour manipuler des unités
-\item[pytest] pour tester des applications 
-\item[requests] pour manipuler des requêtes HTTP
-\item[scipy] pour manipuler des fonctions mathématiques
-\item[seaborn] pour manipuler des graphiques
-\item[pickle, yaml, json] pour manipuler des fichiers sérialisés
-\item[click] pour des interfaces en ligne de commande 
-\end{description}
-
-\subsection*{Numpy}
-\begin{lstlisting}
->>> import numpy as np
->>> a = np.arange(15).reshape(3, 5)
->>> a
-array([[ 0,  1,  2,  3,  4],
-       [ 5,  6,  7,  8,  9],
-       [10, 11, 12, 13, 14]])
->>> a.shape                 # (3, 5)
->>> a.ndim                  # 2
->>> a.dtype.name            # 'int64'
->>> a.itemsize              # 8
->>> a.size                  # 15
->>> type(a)                 # <class 'numpy.ndarray'>
->>> np.array([6, 7, 8]) * 2 # array([12, 14, 16])
->>> np.zeros((3, 5))        # None
->>> np.zeros((3, 5), dtype=np.int16)
-array([[0, 0, 0, 0, 0],
-       [0, 0, 0, 0, 0],
-       [0, 0, 0, 0, 0]])
->>> np.array([[1, 2], [3, 4]], dtype=complex)
-array([[1.+0.j, 2.+0.j],
-       [3.+0.j, 4.+0.j]])
->>> np.linspace(0, 2, 6)
-array([0. , 0.4, 0.8, 1.2, 1.6, 2. ])
-\end{lstlisting}
-
-\subsection*{Matplotlib}
-\begin{lstlisting}
->>> import matplotlib.pyplot as plt
->>> x = np.linspace(0, 2, 100)
->>> y = np.sin(2 * np.pi * x)
->>> plt.plot(x, y)
-[<matplotlib.lines.Line2D object at 0x7f8b8b8b9b90>]
->>> plt.ylabel('some numbers')
->>> plt.show()
-\end{lstlisting}
-
-\subsection*{Functools}
-\begin{lstlisting}
-import functools 
-@cache
-def factorial(n):
-    return n * factorial(n-1) if n else 1
-
-reduce(lambda x, y: x * y, [1, 2, 3, 4, 5]) # => 120
-import operator 
-functools.reduce(operator.mul, [1, 2, 3])   # => 6
-\end{lstlisting}
-
-\subsection*{Itertools}
-\begin{lstlisting}
-chain(*[range(3), range(3)]) # => 0, 1, 2, 0, 1, 2
-combinations('ABCD', 2) # => AB AC AD BC BD CD
-product('ABCD', 'xy') # => Ax Ay Bx By Cx Cy Dx Dy
-permutations('ABCD', 2) 
-# => AB AC AD BA BC BD CA CB CD DA DB DC
-combinations_with_replacement('ABCD', 2) 
-# => AA AB AC AD BB BC BD CC CD DD
-\end{lstlisting}
-
-\subsection*{Collections}
-\begin{lstlisting}
-from collections.abc import Mapping
-class DefaultDict(Mapping):
-    def __init__(self, default_factory=None, *args, **kwargs):
-        self.default_factory = default_factory
-        self.store = dict()
-        self.update(dict(*args, **kwargs))
-    def __getitem__(self, key):
-        if key not in self.store:
-            self.store[key] = self.default_factory()
-        return self.store[key]
-    def __iter__(self):
-        return iter(self.store)
-    def __len__(self):
-        return len(self.store)
-    def __repr__(self):
-        return 'DefaultDict(%s, %s)' % (self.default_factory, self.store)
-\end{lstlisting}
-
-\subsection*{Click}
-\begin{lstlisting}
-@click.command
-@click.option('--name', prompt='Your name', help='')
-@click.option('--age', prompt='Your age', help='')
-def hello(name, age):
-    click.echo('Hello %s!' % name)
-    click.echo('You are %s years old.' % age)
-hello() 
-\end{lstlisting}
-
-\subsection*{Expressions régulières}
-\begin{lstlisting}
-import re 
-re.findall(r'\bf[a-z]*', 'which foot or hand fell fastest')
-['foot', 'fell', 'fastest']
-re.split(r'\s*', 'a b c  d') # ['a', 'b', 'c', 'd']
-re.sub(r'[aeiouy]', '', 'champion') # 'chmprn'
-\end{lstlisting}
-
-\subsection*{PEP (Python Enhancement Proposals)}
-\begin{description}
-    \item[PEP 8] Formattage du code Python
-    \item[PEP 20] Zen of Python 
-    \item[PEP 257] Docstring Conventions (commentaires)
-    \item[PEP 622] Structural Pattern Matching (match/case)  
-\end{description}
+    \begin{tabularx}{\columnwidth}{lX}
+        $\alpha A$ & \lstinline{\\alpha A} \\
+        $\beta B$ & \lstinline{\\beta B} \\
+        $\gamma \Gamma$ & \lstinline{\\gamma \\Gamma} \\
+        $\delta \Delta$ & \lstinline{\\delta \\Delta} \\
+        $\epsilon \varepsilon E$ & \lstinline{\\epsilon \\varepsilon E} \\
+        $\zeta Z Z$ & \lstinline{\\zeta Z} \\
+        $\eta H$ & \lstinline{\\eta H} \\
+        $\theta \vartheta \Theta$ & \lstinline{\\theta \\vartheta \\Theta} \\
+        $\iota I$ & \lstinline{\\iota I} \\
+        $\kappa K$ & \lstinline{\\kappa K} \\
+        $\lambda \Lambda$ & \lstinline{\\lambda \\Lambda} \\
+        $\mu M$ & \lstinline{\\mu M} \\
+        $\nu N$ & \lstinline{\\nu N} \\
+        $\xi \Xi$ & \lstinline{\\xi \\Xi} \\
+        $o O$ & \lstinline{o O} \\
+        $\pi \Pi$ & \lstinline{\\pi \\Pi} \\
+        $\rho \varrho P$ & \lstinline{\\rho \\varrho P} \\
+        $\sigma \Sigma$ & \lstinline{\\sigma \\Sigma} \\
+        $\tau T$ & \lstinline{\\tau T} \\
+        $\upsilon \Upsilon$ & \lstinline{\\upsilon \\Upsilon} \\
+        $\phi \varphi \Phi$ & \lstinline{\\phi \\varphi \\Phi} \\
+        $\chi X$ & \lstinline{\\chi X} \\
+    $\psi \Psi$ & \lstinline{\\psi \\Psi} \\
+    $\omega \Omega$ & \lstinline{\\omega \\Omega} \\
+\end{tabularx}
+\columnbreak
+\begin{tabularx}{\columnwidth}{lX}
+    $\leftarrow$ & \lstinline{\\leftarrow} \\
+    $\rightarrow$ & \lstinline{\\rightarrow} \\
+    $\Leftarrow$ & \lstinline{\\Leftarrow} \\
+    $\Rightarrow$ & \lstinline{\\Rightarrow} \\
+    $\infty$ & \lstinline{\\infty} \\
+    $\forall$ & \lstinline{\\forall} \\
+    $\Re$ & \lstinline{\\Re} \\
+    $\Im$ & \lstinline{\\Im} \\
+    $\nabla$ & \lstinline{\\nabla} \\
+    $\exists$ & \lstinline{\\exists} \\
+    $\nexists$ & \lstinline{\\nexists} \\
+    $\partial$ & \lstinline{\\partial} \\
+    $\triangle$ & \lstinline{\\triangle} \\
+    $\blacksquare$ & \lstinline{\\blacksquare} \\
+    $\times$ & \lstinline{\\times} \\
+    $\cdot$ & \lstinline{\\cdot} \\
+    $\leq$ & \lstinline{\\leq} \\
+    $\geq$ & \lstinline{\\geq} \\
+    $\in$ & \lstinline{\\in} \\
+    $\notin$ & \lstinline{\\notin} \\
+    $\vee$ & \lstinline{\\vee} \\
+\end{tabularx}
 
 \end{multicols*}
+
+\section*{Equations}
+
+\begin{lstlisting}
+\begin{equation}
+    c^2 = a^2 + b^2.
+    \label{eq:pythagoras} % for referencing
+\end{equation}
+\begin{equation}
+  \int_{0}^{\infty} \mathrm{e}^{-x} \mathrm{d}x
+\end{equation}
+
+\end{lstlisting}
+
+\section*{Figures}
+
+\begin{multicols*}{2}
+
+
+\begin{lstlisting}
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=3cm]{example-image-duck}
+  \caption[Canard]{Un canard}
+  \label{fig:right-triangle}
+\end{figure}
+\end{lstlisting}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=3cm]{example-image-duck}
+    \caption[Canard]{Un canard}
+    \label{fig:right-triangle}
+\end{figure}
+
+\end{multicols*}
+
+\section*{Table}
+
+\begin{multicols*}{2}
+
+
+\begin{lstlisting}
+\begin{table}[H]
+  \centering
+  \caption{Caption for the Table.}
+  \begin{tabular}{c|cc}
+    Number &  Last Name & First Name \\
+    1 & Biggus & Dickus \\
+    2 & Monty & Python
+  \end{tabular}
+\end{table}
+\end{lstlisting}
+\columnbreak
+\begin{table}[H]
+  \centering
+  \caption{Caption for the Table.}
+  \begin{tabular}{c|cc}
+    \toprule
+    Number &  Last Name & First Name \\ \midrule
+    1 & Biggus & Dickus \\
+    2 & Monty & Python \\ \bottomrule
+  \end{tabular}
+\end{table}
+
+\end{multicols*}
+\end{multicols}
 
 \end{document}
