@@ -47,26 +47,6 @@
             \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
 \let\code\lstinline
 
-\setlength{\parskip}{0.2em}
-\setlength{\parindent}{0em}
-
-% Highlight configuration for C programming language
-% \lstset{
-%   language=tex,
-%   breaklines=true,
-%   keywordstyle=\bfseries\color{black},
-%   basicstyle=\ttfamily\color{black},
-%   emphstyle={\em \color{gray}},
-%   commentstyle=\color{gray}\ttfamily,
-%   mathescape=true,
-%   keepspaces=true,
-%   showspaces=false,
-%   showtabs=true,
-%   tabsize=3,
-%   columns=fullflexible,
-%   aboveskip=0pt,
-%   belowskip=0pt
-% }
 \definecolor{listinggray}{gray}{0.9}
 \definecolor{lbcolor}{gray}{0.92}
 \lstset{
@@ -82,12 +62,6 @@
     columns=fixed,
     showstringspaces=false,
     extendedchars=true,
-    %linewidth=6.7cm,
-    %xleftmargin={3pt},
-    %framexleftmargin={10pt},
-    %framexrightmargin={2pt},
-    %framextopmargin={9pt},
-    %framexbottommargin={9pt},
     breaklines=true,
     %prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
     %frame=single,
@@ -113,19 +87,13 @@
 \addtolength{\baselineskip}{\mybaselinestretch}
 
 \setlength\parindent{0pt}
+\setlength{\parskip}{0.0em}
 \setlength\tabcolsep{1.5pt}
 \setlength{\columnseprule}{0.4pt}
 
-% Macros
-\newcommand{\tab}{\hspace{2em}}
-\newcommand{\etc}{\small \ldots}
-\newcommand{\any}{$\hzigzag$~}
-\newcommand{\spc}{$\mathvisiblespace$}
-\newcommand{\cd}{\lstinline}
-
 % Titles and paragraphs more compact
-% \titlespacing*{\section}{0pt}{1em}{0pt}
-% \titlespacing*{\subsection}{0pt}{1em}{0pt}
+\titlespacing*{\section}{0pt}{1em}{0pt}
+\titlespacing*{\subsection}{0pt}{1em}{0pt}
 
 
 \begin{document}
@@ -156,12 +124,11 @@ Vous pouvez également include votre propre classe définie dans un fichier \cod
 \documentclass{foobar} % Utilise la définition foobar.cls
 \end{lstlisting}
 
-\section*{Paquets}
+\section*{Quelques Paquets}
 
 \begin{lstlisting}
 \usepackage{caption}  % Configure les légendes
 \usepackage{amsmath}  % Configure l'affichage des équations
-\usepackage{amsfonts} % Autres polices pour les équations
 \usepackage{float}    % Fixer les tables et figures
 \usepackage{graphicx} % Inclusion d'images pdf, png...
 \usepackage{longtable} % Tableaux sur plusieurs pages
@@ -169,11 +136,9 @@ Vous pouvez également include votre propre classe définie dans un fichier \cod
 \usepackage{tabularx} % Tableaux avec colonnes flexibles
 \usepackage{listings} % Inclusion de code avec syntaxe
 \usepackage{xcolor}   % Usage des couleurs
-\usepackage{xifthen}  % Compilation conditionnelle
 \usepackage{hyperref} % Hyperliens pour documents PDF
 \usepackage{fancyhdr} % En-tête et pieds de pages
 \usepackage{geometry} % Configuration des marges
-\usepackage{setspace} % Espacement entre les lignes
 \usepackage{babel}    % Conventions linguistiques
 \usepackage{siunitx}  % Présentation des unités physiques
 \usepackage{tikz}     % Dessin vectoriel dans LaTeX
@@ -282,20 +247,15 @@ Comme vu au paragraphe \ref{subsec:foobar}
 \end{lstlisting}
 
 \section*{Caractère spéciaux}
-\begin{multicols*}{3}
-\S \code+\S+ \\
-\textasciicircum \code+\textasciicircum+ \\
-\textasciitilde \code+\textasciitilde+ \\
-\textbackslash \code+\textbackslash+ \\
-\textbar \code+\textbar+ \\
-\textbraceleft \code+\textbraceleft+ \\
-\textbraceright \code+\textbraceright+ \\
-% \textbullet \code+\textbullet+ \\
-% \textcent \code+\textcent+ \\
-% \textdollar \code+\textdollar+ \\
-% \textellipsis \code+\textellipsis+ \\
-% \ldots \code+\ldots+ \\
-\end{multicols*}
+\begin{tabular}{p{1cm}p{2cm}p{1cm}l}
+\S & \code+\S+ & \textasciicircum &\code+\textasciicircum+ \\
+\textasciitilde &\code+\textasciitilde+ & \textbackslash &\code+\textbackslash+ \\
+\textbar &\code+\textbar+ & \textbraceleft &\code+\textbraceleft+ \\
+\textbraceright &\code+\textbraceright+ & \textbullet & \code+\textbullet+ \\
+\textcent & \code+\textcent+ & \textdollar & \code+\textdollar+ \\
+$\ldots$ & \code+$\ldots$+ & $\widehat{oo}$ & \code+$\widehat{oo}$+ \\
+$\clubsuit$ & \code+$\clubsuit$+ & $\spadesuit$ & \code+$\spadesuit$+ \\
+\end{tabular}
 
 
 \subsection*{Alignement et espacements}
@@ -340,8 +300,7 @@ Définition d'une longueur: \code!\setlength{<nom>}{<valeur>}! p.ex. \\
 \date{\today}
 \title{Apprendre \LaTeX{} avec plaisir}
 \begin{document}
-  \maketitle
-  \newpage
+  \maketitle \newpage
   \tableofcontents
   \section{Introduction}
   Bonjour, monde!
@@ -366,7 +325,7 @@ Sur plusieurs lignes :\par
 +\frac{x^5}{5!}-\frac{x^7}{7!}+\cdots
 \end{multline*}
 \end{minipage}
-\begin{minipage}[c]{0.6\linewidth}
+\begin{minipage}[c]{0.7\linewidth}
 \begin{lstlisting}
 \begin{multline*}
 \sin(x)=x-\frac{x^3}{3!} \\
@@ -382,7 +341,7 @@ Ou alignées :\par
   \nabla\cdot\boldsymbol{B} &= 0 \\
 \end{align*}
   \end{minipage}
-  \begin{minipage}[c]{0.6\linewidth}
+  \begin{minipage}[c]{0.7\linewidth}
 \begin{lstlisting}
 \begin{align*}
   \nabla\cdot\boldsymbol{D} &= \rho \\
@@ -417,10 +376,10 @@ Ou alignées :\par
         $\phi \varphi \Phi$ & \lstinline{\\phi \\varphi \\Phi} \\
         $\chi X$ & \lstinline{\\chi X} \\
     $\psi \Psi$ & \lstinline{\\psi \\Psi} \\
-    $\omega \Omega$ & \lstinline{\\omega \\Omega} \\
 \end{tabularx}
 \columnbreak
 \begin{tabularx}{\columnwidth}{lX}
+    $\omega \Omega$ & \lstinline{\\omega \\Omega} \\
     $\leftarrow$ & \lstinline{\\leftarrow} \\
     $\rightarrow$ & \lstinline{\\rightarrow} \\
     $\Leftarrow$ & \lstinline{\\Leftarrow} \\
@@ -446,10 +405,13 @@ Ou alignées :\par
 
 \end{multicols*}
 \subsection*{Fonctions importantes}
-\begin{tabular}{*8{>{}l|}}
+\begin{tabular}{%
+  p{0.5cm}p{1.5cm}%
+  p{0.5cm}p{1.5cm}%
+  p{0.5cm}p{1.5cm}}
 	$\sum$ & \code?\sum? & $\prod$ & \code?\prod? & $\int$ & \code?\int?\\
-	$\int$ & \code?\int? & $\iint$ & \code?\iint? & $\iiint$ & \code?\iiint? & $\oint$ & \code?\oint?\\
-	$\vec a$ & \code?\vec a? & $\dot a$ & \code?\dot a? & $\ddot a$ & \code?\ddot a? & $\hat a$ & \code?\hat a? \\
+	$\int$ & \code?\int? & $\iint$ & \code?\iint? & $\iiint$ & \code?\iiint? \\ $\oint$ & \code?\oint? & $\vec a$ & \code?\vec a? & $\dot a$ & \code?\dot a? \\
+  $\ddot a$ & \code?\ddot a? & $\hat a$ & \code?\hat a? \\
 	\end{tabular}
 
 \subsection*{Fonctions usuelles}
@@ -461,23 +423,14 @@ Ou alignées :\par
   \code?\ker? & \code?\Pr? \\
 \end{tabular}
 
-\subsection*{Parenthèses}
-\begin{multicols*}{2}
-\begin{tabular}{ll}
-  $()$ & \code+()+ \\
-  $[]$ & \code+[]+ \\
-  ${}$ & \code+\{\}+ \\
-  $\langle\rangle$ & \code+\langle\rangle+ \\
-  $\lbrace\rbrace$ & \code+\lbrace\rbrace+ \\
+\subsection*{Parenthèses et délimiteurs}
+Utiliser \code+\left+ (\code+\right+) pour ajuster la hauteur des parenthèses à l'expression.
+\begin{tabular}{p{0.5cm}p{2cm}p{0.5cm}p{2cm}p{0.5cm}p{2cm}}
+  $(.)$ & \code+(.)+ & $[.]$ & \code+[.]+ & $\{.\}$ & \code+\{.\}+ \\
+  $\langle.\rangle$ & \code+\langle.\rangle+ & $\lbrace.\rbrace$ & \code!\lbrace.\rbrace! & $\lvert.\rvert$ & \code!\lvert.\rvert! \\
+  $\lbrack.\rbrack$ & \code!\lbrack.\rbrack! & $\lceil.\rceil$ & \code!\lceil.\rceil! & $\lfloor.\rfloor$ & \code!\lfloor.\rfloor! \\
+
 \end{tabular}
-\columnbreak
-\begin{tabular}{ll}
-  $\lbrack\rbrack$ & \verb+\lbrack\rbrack+ \\
-  $\lceil\rceil$ & \verb+\lceil\rceil+ \\
-  $\lfloor\rfloor$ & \verb+\lfloor\rfloor+ \\
-  $\lvert\rvert$ & \verb+\lvert\rvert+ \\
-\end{tabular}
-\end{multicols*}
 \subsection*{Élements d'équations}
 
 \begin{tabular}{p{2cm}l}
@@ -641,13 +594,13 @@ U & X & Y \\ \hline
 \end{multicols*}
 
 \section*{Unités}
-Mode d'affichage configurable avec \code+\sisetup{per-mode=reciprocal}+ ou \code+\sisetup{per-mode=fraction}+. Les préfix d'unités tels que : \code+\kilo+, \code+\mega+, \code+\giga+, \code+\tera+, \code+\peta+, \code+\micro+\dots, peuvent être utilisés devant chaque unité.
+Mode d'affichage configurable avec \code+\sisetup{per-mode=reciprocal}+ ou \code+\sisetup{per-mode=fraction}+. Les préfix d'unités tels que : \code+\kilo+, \code+\mega+, \code+\giga+\dots, peuvent être utilisés devant chaque unité.
 
 \begin{tabular}{p{2cm}l}
   \num{7.123456e12} & \code+\num{7.123456e12}+ \\
  $[g] = \si{\meter\per\second\squared}$ & \code!$[g] = \si{\meter\per\second\squared}$!\\
   $E = \SI[per-mode=fraction]{3.7}{\volt\per\milli\meter}$ & \code!E = \SI{3.7}{\volt\per\milli\meter}!\\
- $E = \SI[per-mode=reciprocal]{3.7}{\volt\per\milli\meter}$ & \code!E = \SI[per-mode=reciprocal]{3.7}{\kilo\volt\per\milli\meter}!\\[1em]
+ $E = \SI[per-mode=reciprocal]{3.7}{\volt\per\milli\meter}$ & \code!E = \SI[per-mode=reciprocal]{3.7}{\volt\per\milli\meter}!\\[1em]
 \end{tabular}
 
 \section*{Couleurs}
@@ -695,6 +648,7 @@ Options de \emph{geometry}: \emph{a4paper}, \emph{a4paper, landscape}, \emph{a4p
   \end{enumerate}
 
 \end{multicols*}
+
 
 % \section*{Tiks}
 
@@ -785,13 +739,45 @@ Options de \emph{geometry}: \emph{a4paper}, \emph{a4paper, landscape}, \emph{a4p
 
 % \section*{Bibliographie}
 
-% \section*{Avancé}
-% \begin{lstlisting}
-% \setlength{parameters}{length}
-% \usecounter{counter name}
-% \newcounter{counter name}
+\section*{Compteurs}
+\begin{lstlisting}
+\setlength{parameters}{length}
+\usecounter{counter name}
+\newcounter{counter name}
+\end{lstlisting}
 
-% \end{lstlisting}
+\section*{Code source}
+Deux paquets : \emph{listing} ou \emph{minted}.
+\begin{lstlisting}
+\usepackage{listing}
+\lstset{
+  backgroundcolor=\color{FloralWhite},
+  basicstyle=\tt, tabsize=2,
+  language={C++},
+  aboveskip={0.4\baselineskip},belowskip={0.4\baselineskip},
+  abovecaptionskip={\baselineskip},
+  belowcaptionskip={0\baselineskip},
+  extendedchars=true, breaklines=true,
+  showtabs=false, showspaces=false, showstringspaces=false,
+  identifierstyle=\ttfamily, keywordstyle=\color{blue},
+  commentstyle=\color{green},
+  stringstyle=\color[rgb]{0.8,  0.1,  0.1},
+}
+\lstinputlisting{code.cpp} % Inclus un fichier
+\begin{lstlisting}...\ end{lstlisting} % Extrait de code
+
+\begin{listing}[h] % Extrait de code avec titre
+  \inputminted{python}{assets/code.py} % Utilise minted
+  \caption{Description \label{py:code}}
+\end{listing}
+\end{lstlisting}
+
+\section*{Références}
+\begin{tabular}{p{1.8cm}p{2.2cm}p{2cm}l}
+\code!\cite{key}! & Cite une référence & \code!\label{marker}! & Définit un label \\
+\code!\ref{marker}! & Référence à un label & \code!\pageref{marker}! & Référence à une page \\
+\code!\footnote{text}! & Note de bas de page & \code!\url{heig-vd.ch}! & Hyperlien \\
+\end{tabular}
 \end{multicols*}
 
 \end{document}
