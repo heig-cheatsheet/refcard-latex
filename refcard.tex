@@ -27,6 +27,9 @@
 \usepackage{fancyvrb}
 \usepackage{tikz}
 \usepackage{enumitem}
+\usepackage{vwcol}
+\usepackage{microtype}
+\usetikzlibrary{mindmap}
 \DefineVerbatimEnvironment{Code}{BVerbatim}{baseline=t}
 
 \definecolor{Cornflower Blue}{RGB}{97, 149, 237}
@@ -156,39 +159,50 @@ Vous pouvez également include votre propre classe définie dans un fichier \cod
 \section*{Paquets}
 
 \begin{lstlisting}
-\usepackage{caption}
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{float}
-\usepackage{graphicx}
-\usepackage{longtable}
-\usepackage{booktabs}
-\usepackage{tabularx}
-\usepackage{listings}
-\usepackage{xcolor}
-\usepackage{xifthen}
-\usepackage{hyperref}
-\usepackage{fancyhdr}
-\usepackage{bookmark}
-\usepackage{geometry}
-\usepackage{setspace}
-\usepackage{babel}
+\usepackage{caption}  % Configure les légendes
+\usepackage{amsmath}  % Configure l'affichage des équations
+\usepackage{amsfonts} % Autres polices pour les équations
+\usepackage{float}    % Fixer les tables et figures
+\usepackage{graphicx} % Inclusion d'images pdf, png...
+\usepackage{longtable} % Tableaux sur plusieurs pages
+\usepackage{booktabs} % Meilleure présentation des tableaux
+\usepackage{tabularx} % Tableaux avec colonnes flexibles
+\usepackage{listings} % Inclusion de code avec syntaxe
+\usepackage{xcolor}   % Usage des couleurs
+\usepackage{xifthen}  % Compilation conditionnelle
+\usepackage{hyperref} % Hyperliens pour documents PDF
+\usepackage{fancyhdr} % En-tête et pieds de pages
+\usepackage{geometry} % Configuration des marges
+\usepackage{setspace} % Espacement entre les lignes
+\usepackage{babel}    % Conventions linguistiques
+\usepackage{siunitx}  % Présentation des unités physiques
+\usepackage{tikz}     % Dessin vectoriel dans LaTeX
+
 \end{lstlisting}
 
-\section*{Formats}
+\section*{Formats et références}
 \begin{lstlisting}
+\tableofcontents   % Table des matières
+\listoffigures     % Liste des figures
+\listoftables      % Liste des tableaux
+\listoflistings    % Liste des listes de code
+\index             % Index des termes
+\printindex        % Affichage de l'index
+\printglossary     % Affichage du glossaire
+\printbibliography % Affichage de la bibliographie
 
 \chapter[Description courte]{Description longue}
-\section{Section 1}
-\subsection{Section 1.1}
-\subsubsection{Section 1.1.1}
-\paragraph{Section 1.1.1.1}
 \label{subsec:foobar}
+\section{Section 1}
+  \subsection{Section 1.1}
+    \subsubsection{Section 1.1.1}
+      \paragraph{Section 1.1.1.1}
+  \subsection*{Section sans numéro}
 Comme vu au paragraphe \ref{subsec:foobar}
-
 \end{lstlisting}
 
-
+\section*{Polices et styles}
+\subsection*{Format de police}
 \begin{tabularx}{\columnwidth}{lX}
 \lstinline{\\textbf\{Texte en gras\}} & \textbf{Texte en gras} \\
 \lstinline{\\textit\{Texte en italique\}} & \textit{Texte en italique} \\
@@ -198,15 +212,15 @@ Comme vu au paragraphe \ref{subsec:foobar}
 \lstinline{\\emph\{Emphase\}} & \emph{Emphase} \\
 \lstinline{\\fbox\{Encadré\}} & \fbox{Encadré} \\
 \end{tabularx}
-\section*{Taille de polices}
 
+\subsection*{Taille de polices}
 \begin{multicols*}{2}
   \begin{tabularx}{\columnwidth}{lX}
     \lstinline{\\tiny\{footnotesize\}} & \tiny{Tiny} \\
-    \lstinline{\\scriptsize\{Script Size\}} & \scriptsize{Script Size} \\
-    \lstinline{\\footnotesize\{footnotesize\}} & \footnotesize{footnotesize} \\
+    \lstinline{\\scriptsize\{Script\}} & \scriptsize{Script} \\
+    \lstinline{\\footnotesize\{Footnote\}} & \footnotesize{Footnote} \\
     \lstinline{\\small\{Small\}} & \small{Small} \\
-    \lstinline{\\normalsize\{Normal Size\}} & \normalsize{Normal Size} \\
+    \lstinline{\\normalsize\{Normal\}} & \normalsize{Normal} \\
     \end{tabularx}
   \columnbreak
   \begin{tabularx}{\columnwidth}{lX}
@@ -218,39 +232,167 @@ Comme vu au paragraphe \ref{subsec:foobar}
   \end{tabularx}
 \end{multicols*}
 
-\section*{Justification}
-\begin{tabular}{*3{>{}l}}
-Environnements & Déclarations & Autre \\
-\code!\begin{center}! & \code!\centering! & \code!text \vfill text! \\
-\code!\begin{flushleft}! & \code!\raggedright! & \code!text \hfill text! \\
-\code!\begin{flushright}! & \code!\raggedleft! & \\
+\subsection*{Listes}
+\begin{minipage}[c]{0.3\linewidth}
+\begin{itemize}
+  \item Item 1
+  \item Item 2
+  \item Item 3
+\end{itemize}
+\end{minipage}
+\begin{minipage}[c]{0.6\linewidth}
+\begin{lstlisting}
+\begin{itemize}
+  \item Item 1
+  \item Item 2
+  \item Item 3 \label{it:item3}
+\end{itemize}
+\end{lstlisting}
+\end{minipage}
+
+\begin{minipage}[c]{0.3\linewidth}
+\begin{enumerate}
+  \item Item 1
+  \item Item 2
+  \item Item 3
+\end{enumerate}
+\end{minipage}
+\begin{minipage}[c]{0.6\linewidth}
+\begin{lstlisting}
+\begin{enumerate}
+  \item Item 1
+  \item Item 2
+  \item Item 3 \label{it:item3}
+\end{enumerate}
+\end{lstlisting}
+\end{minipage}
+\begin{lstlisting}
+\usepackage{enumitem}
+\setlist[enumerate,1]{label=\Alph*)}   % A) B) C)
+\setlist[enumerate,2]{label=\alph*)}   % a) b) c)
+\setlist[enumerate,3]{label=\roman*)}  % i) ii) iii)
+\setlist[enumerate,4]{label=\arabic*)} % 1) 2) 3)
+\end{lstlisting}
+
+\section*{Fichiers séparés}
+\begin{lstlisting}
+\input{file.tex}   % Inclusion d'un fichier
+\include{file.tex} % Inclusion d'un fichier et nouvelle page
+\includeonly{file1.tex,file2.tex} % Inclusion de fichiers
+\end{lstlisting}
+
+\section*{Caractère spéciaux}
+\begin{multicols*}{3}
+\S \code+\S+ \\
+\textasciicircum \code+\textasciicircum+ \\
+\textasciitilde \code+\textasciitilde+ \\
+\textbackslash \code+\textbackslash+ \\
+\textbar \code+\textbar+ \\
+\textbraceleft \code+\textbraceleft+ \\
+\textbraceright \code+\textbraceright+ \\
+% \textbullet \code+\textbullet+ \\
+% \textcent \code+\textcent+ \\
+% \textdollar \code+\textdollar+ \\
+% \textellipsis \code+\textellipsis+ \\
+% \ldots \code+\ldots+ \\
+\end{multicols*}
+
+
+\subsection*{Alignement et espacements}
+\begin{tabular}{*2{>{}l}}
+\code!\begin{center}! & \code!\centering! \\
+\code!\begin{flushleft}! & \code!\raggedright! \\
+\code!\begin{flushright}! & \code!\raggedleft! \\
+\code!\vspace{1cm}! & Espacement vertical \\
+\code!\hspace{1cm}! & Espacement horizontal \\
+\code!\vfil! & Remplissage vertical automatique \\
+\code!\hfil! & Remplissage horizontal automatique \\
+\code!\vfill! & Remplissage vertical jusqu'au bas de page \\
+\code!\hfill! & Remplissage horizontal jusqu'au bord de page \\
 \end{tabular}
 
-\section*{Minimal}
+\section*{Unités internes et longueurs}
+\begin{tabular}{ll|ll|ll|ll}
+Points ($\SI{351.46}{\mu\meter}$) & \code+pt+ & Millimètres & \code+mm+ & Pouce ($\SI{2.54}{\centi\metre}$)& \code+in+ & Largeur d'un M & \code+em+ \\
+Pixel & \code+px+ & Centimètres & \code+cm+ & Pica (12 Points) & \code+pc+ & Hauteur d'un X & \code+ex+ \\
+\end{tabular}
+
+\begin{tabular}{*2{>{}l}}
+\code!\baselineskip! & Espacement vertical entre paragraphes \\
+\code!\columnsep! & Espacement horizontal entre colonnes \\
+\code!\columnwidth! & Largeur d'une colonne \\
+\code!\linewidth! & Largeur de la ligne dans l'environnement courant \\
+\code!\textwidth! & Largeur de la page moins les marges \\
+\code!\parskip! & Espacement horizontal de la première ligne \\
+\code!\paperwidth! & Largeur de la page \\
+\code!\paperheight! & Hauteur de la page \\
+\code!0.25\textwidth! & \SI{25}{\percent} de la largeur de la page \\
+\end{tabular}
+
+Définition d'une longueur: \code!\setlength{<nom>}{<valeur>}! p.ex. \\
+\code!\setlength{\columnsep}{1cm}!
+\section*{Exemple minimal}
 
 \begin{lstlisting}
 \documentclass[a4paper,11pt]{article}
 \usepackage[french]{babel}
-
 \author{Yves Chevallier}
 \date{\today}
 \title{Apprendre \LaTeX{} avec plaisir}
 \begin{document}
-\maketitle
-\newpage
-\tableofcontents
-\section{Introduction}
-Bonjour.
+  \maketitle
+  \newpage
+  \tableofcontents
+  \section{Introduction}
+  Bonjour, monde!
+\end{document}
 \end{lstlisting}
 
 \section*{Math}
 
-\begin{tabularx}{\columnwidth}{Xl}
+\begin{tabularx}{\columnwidth}{lX}
     \lstinline{a^2 + b^2 = c^2} & $a^2 + b^2 = c^2$ \\
+    \lstinline{$...$} & Mode math en ligne \\
+    \lstinline{$$...$$} & Mode math multi-ligne \\
+    \lstinline{\\[...\\]} & Mode math multi-ligne \\
+    \lstinline{\\begin\{equation\}...\\end\{equation\}} & Équation numérotée \\
+    \lstinline{\\begin\{equation*\}...\\end\{equation*\}} & Équation non numérotée \\
 \end{tabularx}
 
-\begin{multicols*}{2}
+Sur plusieurs lignes :\par
+\begin{minipage}[c]{0.3\linewidth}
+\begin{multline*}
+\sin(x)=x-\frac{x^3}{3!} \\
++\frac{x^5}{5!}-\frac{x^7}{7!}+\cdots
+\end{multline*}
+\end{minipage}
+\begin{minipage}[c]{0.6\linewidth}
+\begin{lstlisting}
+\begin{multline*}
+\sin(x)=x-\frac{x^3}{3!} \\
++\frac{x^5}{5!}-\frac{x^7}{7!}+\cdots
+\end{multline*}
+\end{lstlisting}
+\end{minipage}
 
+Ou alignées :\par
+\begin{minipage}[c]{0.3\linewidth}
+\begin{align*}
+  \nabla\cdot\boldsymbol{D} &= \rho \\
+  \nabla\cdot\boldsymbol{B} &= 0 \\
+\end{align*}
+  \end{minipage}
+  \begin{minipage}[c]{0.6\linewidth}
+\begin{lstlisting}
+\begin{align*}
+  \nabla\cdot\boldsymbol{D} &= \rho \\
+  \nabla\cdot\boldsymbol{B} &= 0 \\
+\end{align*}
+  \end{lstlisting}
+  \end{minipage}
+
+\subsection*{Symboles mathématiques}
+\begin{multicols*}{2}
     \begin{tabularx}{\columnwidth}{lX}
         $\alpha A$ & \lstinline{\\alpha A} \\
         $\beta B$ & \lstinline{\\beta B} \\
@@ -311,60 +453,52 @@ Bonjour.
 	\end{tabular}
 
 \subsection*{Fonctions usuelles}
-\begin{tabular}{*6{>{}l}}
-	\code?\sin? & \code?\sinh? & \code?\arcsin? & \code?\csc? & \code?\ln? & \code?\min?\\
-	\code?\cos? & \code?\cosh? & \code?\arccos? & \code?\sec? & \code?\lg? & \code?\max?\\
-	\code?\tan? & \code?\tanh? & \code?\arctan? & \code?\cot? & \code?\log? & \code?\lim?\\
-	\code?\exp? & \code?\det? & \code?\tr? & \code?\dim? & \code?\ker? & \code?\Pr?\\
-	\end{tabular}
+\begin{tabular}{llllllllllll}
+	\code?\sin? & \code?\sinh? & \code?\arcsin? & \code?\csc? & \code?\ln? & \code?\min? \code?\cos? & \code?\cosh? & \code?\arccos? & \code?\sec? &
+  \code?\lg? & \code?\max? \\
 
-Parenthèses
+	\code?\tan? & \code?\tanh? & \code?\arctan? & \code?\cot? & \code?\log? & \code?\lim? \code?\exp? & \code?\det? & \code?\tr? & \code?\dim? &
+  \code?\ker? & \code?\Pr? \\
+\end{tabular}
+
+\subsection*{Parenthèses}
 \begin{multicols*}{2}
-\begin{tabularx}{\columnwidth}{lX}
-  $()$ & \verb+()+ \\
-  $[]$ & \verb+[]+ \\
-  ${}$ & \verb+\{\}+ \\
-  $\langle\rangle$ & \verb+\langle\rangle+ \\
-  $\lbrace\rbrace$ & \verb+\lbrace\rbrace+ \\
-\end{tabularx}
+\begin{tabular}{ll}
+  $()$ & \code+()+ \\
+  $[]$ & \code+[]+ \\
+  ${}$ & \code+\{\}+ \\
+  $\langle\rangle$ & \code+\langle\rangle+ \\
+  $\lbrace\rbrace$ & \code+\lbrace\rbrace+ \\
+\end{tabular}
 \columnbreak
-\begin{tabularx}{\columnwidth}{lX}
+\begin{tabular}{ll}
   $\lbrack\rbrack$ & \verb+\lbrack\rbrack+ \\
   $\lceil\rceil$ & \verb+\lceil\rceil+ \\
   $\lfloor\rfloor$ & \verb+\lfloor\rfloor+ \\
   $\lvert\rvert$ & \verb+\lvert\rvert+ \\
-\end{tabularx}
+\end{tabular}
 \end{multicols*}
-\section*{Équations}
+\subsection*{Élements d'équations}
 
-\begin{lstlisting}
-\begin{equation}
-    c^2 = a^2 + b^2.
-    \label{eq:pythagoras} % for referencing
-\end{equation}
-\begin{equation}
-  \int_{0}^{\infty} \mathrm{e}^{-x} \mathrm{d}x
-\end{equation}
-
-\end{lstlisting}
-\hrule
-\begin{tabularx}{\columnwidth}{lX}
+\begin{tabular}{p{2cm}l}
   $x^y$ &  \code+$x^y$+ \\
   $x_y$ &  \code+$x_y$+ \\
-  $x^{y+z}$ &  \code+$x^{y+z}$+ \\
-  $\frac{x}{y}$ & \code+$\\frac{x}{y}$+ \\
-  $\sqrt{x}$ & \code+$\\sqrt{x}$+ \\
-  $\sqrt[n]{x}$ & \code+$\\sqrt[n]{x}$+ \\
-  % $x\cdot y$ & \code+$x\cdot y$+ \\
-  % $\sum_{j=0}^n j^2$ & \code+$\sum_{j=0}^n j^2$+ \\
-  % $\int_{x=0}^{\infty} \mathrm{e}^{-x} \mathrm{d}x$ & \code+$\int_{x=0}^{\infty} \mathrm{e}^{-x} \mathrm{d}x$+ \\
-  % $\left\langle i,2^{2^i}\right\rangle$ & \code+$\left\langle i,2^{2^i}\right\rangle$+ \\
-  % $\nabla=\boldsymbol{i}\frac{d}{dx}+...$ & \code+$\nabla=\boldsymbol{i}\frac{d}{dx}+...$+ \\
-  % $\lim_{h\to 0}\frac{f(x+h-f(x)}{h}$ & \code+$\lim_{h\to 0}\frac{f(x+h-f(x)}{h}$+ \\
-  % $f\colon\mathbb{R}\to\mathbb{R}$ & \code+$f\colon\mathbb{R}\to\mathbb{R}$+ \\
-\end{tabularx}
+  $x^{y+z}$ &  \code!$x^{y+z}$! \\
+  $\frac{x}{y}$ & \code!$\frac{x}{y}$! \\
+  $\sqrt{x}$ & \code+$\sqrt{x}$+ \\
+  $\sqrt[n]{x}$ & \code+$\sqrt[n]{x}$+ \\
+  $\left(a + \frac{1}{2} \right)^2$ & \code!$\left( a + \frac{1}{2} \right)^2$!
+  \\
+  $x\cdot y$ & \code+$x\cdot y$+ \\
+  $\sum_{j=0}^n j^2$ & \code+$\sum_{j=0}^n j^2$+ \\
+  $\int_{x=0}^{\infty} \mathrm{e}^{-x} \mathrm{d}x$ & \code+$\int_{x=0}^{\infty} \mathrm{e}^{-x} \mathrm{d}x$+ \\
+  $\left\langle i,2^{2^i}\right\rangle$ & \code+$\left\langle i,2^{2^i}\right\rangle$+ \\
+  $\nabla=\boldsymbol{i}\frac{d}{dx}+...$ & \code!$\nabla=\boldsymbol{i}\frac{d}{dx}+...$! \\
+  $\lim_{h\to 0}\frac{f(x+h-f(x)}{h}$ & \code!$\lim_{h\to 0}\frac{f(x+h-f(x)}{h}$! \\
+  $f\colon\mathbb{R}\to\mathbb{R}$ & \code+$f\colon\mathbb{R}\to\mathbb{R}$+ \\
+\end{tabular}
 
-Système d'équation
+\subsection*{Système d'équation}
 
 \begin{multicols*}{2}
 \[
@@ -374,12 +508,12 @@ Système d'équation
   \end{cases}
 \]
 \columnbreak
-\begin{verbatim}
+\begin{lstlisting}
 f_n = \begin{cases}
   a & \text{if $n=0$} \\
   r\cdot f_n{n-1} &\text{else}
 \end{cases}
-\end{verbatim}
+\end{lstlisting}
 \end{multicols*}
 
 \begin{multicols*}{2}
@@ -390,18 +524,36 @@ f_n = \begin{cases}
     \end{pmatrix}
   \]
   \columnbreak
-  \begin{verbatim}
+  \begin{lstlisting}
 \begin{pmatrix}
   a & b \\
   c & d
 \end{pmatrix}
-  \end{verbatim}
+  \end{lstlisting}
   \end{multicols*}
 
 \section*{Figures}
 
-\begin{multicols*}{2}
+\begin{tabular}{p{1.5cm}l}
+h & Placer la figure approximativement ici \\
+t & Placer la figure au début de la page \\
+b & Placer la figure à la fin de la page \\
+p & Placer la figure sur une page à part \\
+! & Surcharge la position par défaut \\
+H & Force la figure à être placée ici \\
+\end{tabular}
 
+\begin{lstlisting}
+\code!\graphicspath{ {images/} }! % Chemin des images
+\includegraphics[scale=1.5]{logo} % Inclure une image
+\includegraphics[scale=\textwidth]{logo} % Inclure une image
+
+\begin{wrapfigure}{r}{0.25\textwidth}
+  \centering
+  \includegraphics[width=0.25\textwidth]{image}
+\end{wrapfigure} % Image encapsulée dans le texte
+\end{lstlisting}
+\begin{multicols*}{2}
 
 \begin{lstlisting}
 \begin{figure}[H]
@@ -423,37 +575,32 @@ f_n = \begin{cases}
 
 \section*{Table}
 \subsection*{Tableau simple avec légende}
-\begin{multicols*}{2}
+\begin{minipage}[c]{0.7\linewidth}
 \begin{lstlisting}
-\begin{table}[H]
-  \centering
-  \caption{Description}
-  \begin{tabular}{c|lr}
-    \toprule
-    Id & Nom & Prénom \\
-    \midrule
-    1 & Dantès & Edmond \\
-    2 & Herrera & Mercédès \\
-    3 & de Villefort & Gérard \\
-    \bottomrule
-  \end{tabular}
-\end{table}
+\begin{table}[H] \centering
+\caption{Description \label{tb:tab1}}
+\begin{tabular}{c|lr} \toprule
+Id & Nom & Prénom \\ \midrule
+1 & Dantès & Edmond \\
+2 & Herrera & Mercédès \\ \bottomrule
+\end{tabular} \end{table}
 \end{lstlisting}
-\columnbreak
+\end{minipage}
+\begin{minipage}[c]{0.3\linewidth}
 \begin{table}[H]
   \centering
   \caption{Description}
   \begin{tabular}{c|lr}
-    \toprule
-    Id &  Nom & Prénom \\
-    \midrule
-    1 & Dantès & Edmond \\
-    2 & Herrera & Mercédès \\
-    3 & de Villefort & Gérard \\
-    \bottomrule
+  \toprule
+  Id &  Nom & Prénom \\
+  \midrule
+  1 & Dantès & Edmond \\
+  2 & Herrera & Mercédès \\
+  \bottomrule
   \end{tabular}
 \end{table}
-\end{multicols*}
+\end{minipage}
+
 \subsection*{Tableau pleine largeur avec colonne variable}
 \begin{multicols*}{2}
 \begin{lstlisting}
@@ -495,10 +642,12 @@ U & X & Y \\ \hline
 
 \section*{Unités}
 Mode d'affichage configurable avec \code+\sisetup{per-mode=reciprocal}+ ou \code+\sisetup{per-mode=fraction}+. Les préfix d'unités tels que : \code+\kilo+, \code+\mega+, \code+\giga+, \code+\tera+, \code+\peta+, \code+\micro+\dots, peuvent être utilisés devant chaque unité.
-\begin{tabular}{ll}
-  \num{7.123456e12} & \code+\num{7.123456e12}+ \\[1em]
-	$[g] = \si{\meter \per \second \squared}$ & \code#[g] = \si{\meter\per\second\squared}#\\[1em]
-	$E = \SI[per-mode=fraction]{3.7}{\kilo\micro\volt\per\milli\meter}$ & \code#E = \SI{1.3}{\kilo\volt\per\milli\meter}#\\
+
+\begin{tabular}{p{2cm}l}
+  \num{7.123456e12} & \code+\num{7.123456e12}+ \\
+ $[g] = \si{\meter\per\second\squared}$ & \code!$[g] = \si{\meter\per\second\squared}$!\\
+  $E = \SI[per-mode=fraction]{3.7}{\volt\per\milli\meter}$ & \code!E = \SI{3.7}{\volt\per\milli\meter}!\\
+ $E = \SI[per-mode=reciprocal]{3.7}{\volt\per\milli\meter}$ & \code!E = \SI[per-mode=reciprocal]{3.7}{\kilo\volt\per\milli\meter}!\\[1em]
 \end{tabular}
 
 \section*{Couleurs}
@@ -523,6 +672,9 @@ Par défaut le package \emph{xcolor} supporte 68 couleurs standards (\textcolor{
 Options de \emph{geometry}: \emph{a4paper}, \emph{a4paper, landscape}, \emph{a4paper, tight}, \emph{twocolumn}\dots
 \begin{lstlisting}
 \usepackage[options]{geometry}
+\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+\usepackage[a4paper,landscape,tight,twocolumn]{geometry}
+
 \end{lstlisting}
 
 \begin{multicols*}{2}
@@ -544,29 +696,102 @@ Options de \emph{geometry}: \emph{a4paper}, \emph{a4paper, landscape}, \emph{a4p
 
 \end{multicols*}
 
-\section*{Tiks}
+% \section*{Tiks}
 
-\begin{tikzpicture}
-  \draw[thick,rounded corners=8pt] (0,0) -- (0,2) -- (1,3.25)
-   -- (2,2) -- (2,0) -- (0,2) -- (2,2) -- (0,0) -- (2,0);
-\end{tikzpicture}
+% \begin{tikzpicture}
+%   \draw[thick,rounded corners=8pt] (0,0) -- (0,2) -- (1,3.25)
+%    -- (2,2) -- (2,0) -- (0,2) -- (2,2) -- (0,0) -- (2,0);
+% \end{tikzpicture}
 
-\begin{tikzpicture}[domain=0:4]
-  \draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
-  \draw[->] (-0.2,0) -- (4.2,0) node[right] {$x$};
-  \draw[->] (0,-1.2) -- (0,4.2) node[above] {$f(x)$};
-  \draw[color=red]    plot (\x,\x)             node[right] {$f(x) =x$};
-  \draw[color=blue]   plot (\x,{sin(\x r)})    node[right] {$f(x) = \sin x$};
-  \draw[color=orange] plot (\x,{0.05*exp(\x)}) node[right] {$f(x) = \frac{1}{20} \mathrm e^x$};
-\end{tikzpicture}
+% \begin{tikzpicture}[domain=0:4]
+%   \draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+%   \draw[->] (-0.2,0) -- (4.2,0) node[right] {$x$};
+%   \draw[->] (0,-1.2) -- (0,4.2) node[above] {$f(x)$};
+%   \draw[color=red]    plot (\x,\x)             node[right] {$f(x) =x$};
+%   \draw[color=blue]   plot (\x,{sin(\x r)})    node[right] {$f(x) = \sin x$};
+%   \draw[color=orange] plot (\x,{0.05*exp(\x)}) node[right] {$f(x) = \frac{1}{20} \mathrm e^x$};
+% \end{tikzpicture}
 
-\section*{Avancé}
-\begin{lstlisting}
-\setlength{parameters}{length}
-\usecounter{counter name}
-\newcounter{counter name}
+% \begin{multicols*}{2}
 
-\end{lstlisting}
+
+% \resizebox{5cm}{!}{%
+% \begin{tikzpicture}[
+%   mindmap,
+%   concept color = gray!30,
+%   every node/.style = {concept},
+%   grow cyclic,
+%   level 1/.append style = {
+%       concept color = gray!20,
+%       level distance = 4.5cm,
+%       sibling angle = 120
+%   },
+%   level 2/.append style = {
+%       concept color = gray!10,
+%       level distance = 3cm,
+%       sibling angle = 45
+%   }
+% ]
+
+% \node  {Our root concept}
+%   child {node {First idea}
+%       child {node {Fact 1}}
+%       child {node {Fact 2}}
+%   }
+%   child {node {Second idea}
+%   }
+%   child {node {Third idea}
+%       child {node {Note 1}}
+%       child {node {Note 2}}
+%       child {node {Note 3}}
+% };
+
+% \end{tikzpicture}
+% }
+% \columnbreak
+% \begin{lstlisting}
+%   \begin{tikzpicture}[
+%     mindmap,
+%     concept color = gray!30,
+%     every node/.style = {concept},
+%     grow cyclic,
+%     level 1/.append style = {
+%         concept color = gray!20,
+%         level distance = 4.5cm,
+%         sibling angle = 120
+%     },
+%     level 2/.append style = {
+%         concept color = gray!10,
+%         level distance = 3cm,
+%         sibling angle = 45
+%     }
+%   ]
+
+%   \node  {Our root concept}
+%     child {node {First idea}
+%         child {node {Fact 1}}
+%         child {node {Fact 2}}
+%     }
+
+%     child {node {Third idea}
+%         child {node {Note 1}}
+%         child {node {Note 2}}
+%         child {node {Note 3}}
+%   };
+
+%   \end{tikzpicture}
+% \end{lstlisting}
+% \end{multicols*}
+
+% \section*{Bibliographie}
+
+% \section*{Avancé}
+% \begin{lstlisting}
+% \setlength{parameters}{length}
+% \usecounter{counter name}
+% \newcounter{counter name}
+
+% \end{lstlisting}
 \end{multicols*}
 
 \end{document}
