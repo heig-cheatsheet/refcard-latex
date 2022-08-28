@@ -7,10 +7,11 @@
 \usepackage[fontsize=6.5pt]{scrextend}
 \usepackage[T1]{fontenc}
 \usepackage{multicol}
-\usepackage{tabularx}
+\usepackage{tabularx,ragged2e}
 \usepackage{sectsty}
 \usepackage{lmodern}
 \usepackage{stix}
+\usepackage{siunitx}
 \usepackage{listings}
 \usepackage{multirow}
 \usepackage{float}
@@ -20,33 +21,82 @@
 \usepackage{fontspec}
 \usepackage{booktabs}
 \usepackage{amsmath}
+\usepackage{accents}
+\usepackage{amssymb}
+\usepackage{esint}
+\usepackage{fancyvrb}
+\usepackage{tikz}
+\usepackage{enumitem}
+\DefineVerbatimEnvironment{Code}{BVerbatim}{baseline=t}
+
+\definecolor{Cornflower Blue}{RGB}{97, 149, 237}
+\definecolor{RAL2000}{HTML}{da6e00}
+\colorlet{corn}{Cornflower Blue}
+\colorlet{heig}{RAL2000}
+
 \input{revision}
 
 \ifdefined\tinted
-  \pagecolor{SpringGreen!60}
+  \pagecolor{CadetBlue!60}
 \fi
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+\let\code\lstinline
 
 \setlength{\parskip}{0.2em}
 \setlength{\parindent}{0em}
 
 % Highlight configuration for C programming language
+% \lstset{
+%   language=tex,
+%   breaklines=true,
+%   keywordstyle=\bfseries\color{black},
+%   basicstyle=\ttfamily\color{black},
+%   emphstyle={\em \color{gray}},
+%   commentstyle=\color{gray}\ttfamily,
+%   mathescape=true,
+%   keepspaces=true,
+%   showspaces=false,
+%   showtabs=true,
+%   tabsize=3,
+%   columns=fullflexible,
+%   aboveskip=0pt,
+%   belowskip=0pt
+% }
+\definecolor{listinggray}{gray}{0.9}
+\definecolor{lbcolor}{gray}{0.92}
 \lstset{
-  language=tex,
-  breaklines=true,
-  keywordstyle=\bfseries\color{black},
-  basicstyle=\ttfamily\color{black},
-  emphstyle={\em \color{gray}},
-  commentstyle=\color{gray}\ttfamily,
-  mathescape=true,
-  keepspaces=true,
-  showspaces=false,
-  showtabs=true,
-  tabsize=3,
-  columns=fullflexible,
-  aboveskip=0pt,
-  belowskip=0pt
+    backgroundcolor=\color{lbcolor},
+    basicstyle=\tt,
+    tabsize=2,
+    language={[LaTeX]TeX},
+    %upquote=true,
+    aboveskip={0.4\baselineskip},
+    belowskip={0.4\baselineskip},
+    abovecaptionskip={\baselineskip},
+    belowcaptionskip={0\baselineskip},
+    columns=fixed,
+    showstringspaces=false,
+    extendedchars=true,
+    %linewidth=6.7cm,
+    %xleftmargin={3pt},
+    %framexleftmargin={10pt},
+    %framexrightmargin={2pt},
+    %framextopmargin={9pt},
+    %framexbottommargin={9pt},
+    breaklines=true,
+    %prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
+    %frame=single,
+    showtabs=false,
+    showspaces=false,
+    showstringspaces=false,
+    identifierstyle=\ttfamily,
+    %tagstyle=\bf,
+    keywordstyle=\color{MidnightBlue},
+    commentstyle=\color{ForestGreen},
+    stringstyle=\color[rgb]{0.8,  0.1,  0.1},
 }
-
 % Configuration
 \renewcommand{\familydefault}{\sfdefault}
 
@@ -87,19 +137,20 @@
 \end{tabularx}
 {
 \scriptsize
-Cette carte de référence est destinée aux étudiants utilisant \LaTeX2e pour leurs rapports de travaux pratiques ou rapports de travail de Bachelor. Cette carte comprend une liste non exhaustive des possibilités du langage \LaTeX résumé en une feuille A4 recto-verso. Ce document est en partie inspiré de \emph{Learn X in Y}.
-
+Cette carte de référence est destinée aux étudiants utilisant \LaTeX2e pour leurs rapports de travaux pratiques ou rapports de travail de Bachelor. Cette carte comprend une liste non exhaustive des possibilités du langage \LaTeX~ résumé en une feuille A4 recto-verso. Ce document est en partie inspiré de \emph{Learn X in Y}. Il est également destiné aux étudiants qui souhaitent apprendre \LaTeX2e dans le cadre du cours de HES d'été.
 }
+
 \section*{Classes de document}
+Vous pouvez également include votre propre classe définie dans un fichier \code{.cls}.
 \begin{lstlisting}
 \documentclass[11pt,a4paper,landscape,twoside]{article}
 \documentclass{report} % Dispose de \chapter
-\documentclass{book}   % Dispose de \frontmatter \mainmatter et \backmatter
-
+\documentclass{book}   % Dispose de \frontmatter \mainmatter
+                       % et \backmatter
 \documentclass{memoir} % Pour écrire une thèse de doctorat
 \documentclass{beamer} % Pour faire des présentation type PPT
-\documentclass{exam}   % Pour écrire des travaux écrits/examens
-\documentclass{lettre} % Modèle de l'observatoire de Genève pour écrire des lettres.
+\documentclass{exam}   % Pour écrire des travaux écrits
+\documentclass{foobar} % Utilise la définition foobar.cls
 \end{lstlisting}
 
 \section*{Paquets}
@@ -135,26 +186,46 @@ Cette carte de référence est destinée aux étudiants utilisant \LaTeX2e pour 
 \label{subsec:foobar}
 Comme vu au paragraphe \ref{subsec:foobar}
 
-\textbf{Texte en gras}
-\textit{Texte en italique}
-\texttt{Texte en couleur}
-\textsc{Texte en souligné}
-\textup{Texte en exposant}
-\textsl{Texte en italique souligné}
-\textsf{Texte en gras souligné}
-
-\begin{enumerate} % Liste numérotée
-    \item Salade
-    \item Melon
-    \item Durian
-\end{enumerate}
-
-\begin{itemize} % Liste à puces
-    \item Un
-    \item Deux
-    \item Trois
-\end{itemize}
 \end{lstlisting}
+
+
+\begin{tabularx}{\columnwidth}{lX}
+\lstinline{\\textbf\{Texte en gras\}} & \textbf{Texte en gras} \\
+\lstinline{\\textit\{Texte en italique\}} & \textit{Texte en italique} \\
+\lstinline{\\texttt\{Texte en imprimerie\}} & \texttt{Texte en imprimerie} \\
+\lstinline{\\textsc\{Texte en capitales\}} & \textsc{Texte en capitales} \\
+\lstinline{\\textsf\{Texte sans-serif\}} & \textsf{Texte sans-serif} \\
+\lstinline{\\emph\{Emphase\}} & \emph{Emphase} \\
+\lstinline{\\fbox\{Encadré\}} & \fbox{Encadré} \\
+\end{tabularx}
+\section*{Taille de polices}
+
+\begin{multicols*}{2}
+  \begin{tabularx}{\columnwidth}{lX}
+    \lstinline{\\tiny\{footnotesize\}} & \tiny{Tiny} \\
+    \lstinline{\\scriptsize\{Script Size\}} & \scriptsize{Script Size} \\
+    \lstinline{\\footnotesize\{footnotesize\}} & \footnotesize{footnotesize} \\
+    \lstinline{\\small\{Small\}} & \small{Small} \\
+    \lstinline{\\normalsize\{Normal Size\}} & \normalsize{Normal Size} \\
+    \end{tabularx}
+  \columnbreak
+  \begin{tabularx}{\columnwidth}{lX}
+    \lstinline{\\large\{Large\}} & \large{Large} \\
+    \lstinline{\\Large\{Large\}} & \Large{Large} \\
+    \lstinline{\\LARGE\{LARGE\}} & \LARGE{LARGE} \\
+    \lstinline{\\huge\{Huge\}} & \huge{Huge} \\
+    \lstinline{\\Huge\{Huge\}} & \Huge{Huge} \\
+  \end{tabularx}
+\end{multicols*}
+
+\section*{Justification}
+\begin{tabular}{*3{>{}l}}
+Environnements & Déclarations & Autre \\
+\code!\begin{center}! & \code!\centering! & \code!text \vfill text! \\
+\code!\begin{flushleft}! & \code!\raggedright! & \code!text \hfill text! \\
+\code!\begin{flushright}! & \code!\raggedleft! & \\
+\end{tabular}
+
 \section*{Minimal}
 
 \begin{lstlisting}
@@ -232,8 +303,39 @@ Bonjour.
 \end{tabularx}
 
 \end{multicols*}
+\subsection*{Fonctions importantes}
+\begin{tabular}{*8{>{}l|}}
+	$\sum$ & \code?\sum? & $\prod$ & \code?\prod? & $\int$ & \code?\int?\\
+	$\int$ & \code?\int? & $\iint$ & \code?\iint? & $\iiint$ & \code?\iiint? & $\oint$ & \code?\oint?\\
+	$\vec a$ & \code?\vec a? & $\dot a$ & \code?\dot a? & $\ddot a$ & \code?\ddot a? & $\hat a$ & \code?\hat a? \\
+	\end{tabular}
 
-\section*{Equations}
+\subsection*{Fonctions usuelles}
+\begin{tabular}{*6{>{}l}}
+	\code?\sin? & \code?\sinh? & \code?\arcsin? & \code?\csc? & \code?\ln? & \code?\min?\\
+	\code?\cos? & \code?\cosh? & \code?\arccos? & \code?\sec? & \code?\lg? & \code?\max?\\
+	\code?\tan? & \code?\tanh? & \code?\arctan? & \code?\cot? & \code?\log? & \code?\lim?\\
+	\code?\exp? & \code?\det? & \code?\tr? & \code?\dim? & \code?\ker? & \code?\Pr?\\
+	\end{tabular}
+
+Parenthèses
+\begin{multicols*}{2}
+\begin{tabularx}{\columnwidth}{lX}
+  $()$ & \verb+()+ \\
+  $[]$ & \verb+[]+ \\
+  ${}$ & \verb+\{\}+ \\
+  $\langle\rangle$ & \verb+\langle\rangle+ \\
+  $\lbrace\rbrace$ & \verb+\lbrace\rbrace+ \\
+\end{tabularx}
+\columnbreak
+\begin{tabularx}{\columnwidth}{lX}
+  $\lbrack\rbrack$ & \verb+\lbrack\rbrack+ \\
+  $\lceil\rceil$ & \verb+\lceil\rceil+ \\
+  $\lfloor\rfloor$ & \verb+\lfloor\rfloor+ \\
+  $\lvert\rvert$ & \verb+\lvert\rvert+ \\
+\end{tabularx}
+\end{multicols*}
+\section*{Équations}
 
 \begin{lstlisting}
 \begin{equation}
@@ -245,6 +347,56 @@ Bonjour.
 \end{equation}
 
 \end{lstlisting}
+\hrule
+\begin{tabularx}{\columnwidth}{lX}
+  $x^y$ &  \code+$x^y$+ \\
+  $x_y$ &  \code+$x_y$+ \\
+  $x^{y+z}$ &  \code+$x^{y+z}$+ \\
+  $\frac{x}{y}$ & \code+$\\frac{x}{y}$+ \\
+  $\sqrt{x}$ & \code+$\\sqrt{x}$+ \\
+  $\sqrt[n]{x}$ & \code+$\\sqrt[n]{x}$+ \\
+  % $x\cdot y$ & \code+$x\cdot y$+ \\
+  % $\sum_{j=0}^n j^2$ & \code+$\sum_{j=0}^n j^2$+ \\
+  % $\int_{x=0}^{\infty} \mathrm{e}^{-x} \mathrm{d}x$ & \code+$\int_{x=0}^{\infty} \mathrm{e}^{-x} \mathrm{d}x$+ \\
+  % $\left\langle i,2^{2^i}\right\rangle$ & \code+$\left\langle i,2^{2^i}\right\rangle$+ \\
+  % $\nabla=\boldsymbol{i}\frac{d}{dx}+...$ & \code+$\nabla=\boldsymbol{i}\frac{d}{dx}+...$+ \\
+  % $\lim_{h\to 0}\frac{f(x+h-f(x)}{h}$ & \code+$\lim_{h\to 0}\frac{f(x+h-f(x)}{h}$+ \\
+  % $f\colon\mathbb{R}\to\mathbb{R}$ & \code+$f\colon\mathbb{R}\to\mathbb{R}$+ \\
+\end{tabularx}
+
+Système d'équation
+
+\begin{multicols*}{2}
+\[
+  f_n = \begin{cases}
+    a & \text{if $n=0$} \\
+    r\cdot f_n{n-1} &\text{else}
+  \end{cases}
+\]
+\columnbreak
+\begin{verbatim}
+f_n = \begin{cases}
+  a & \text{if $n=0$} \\
+  r\cdot f_n{n-1} &\text{else}
+\end{cases}
+\end{verbatim}
+\end{multicols*}
+
+\begin{multicols*}{2}
+  \[
+    \begin{pmatrix}
+      a & b \\
+      c & d
+    \end{pmatrix}
+  \]
+  \columnbreak
+  \begin{verbatim}
+\begin{pmatrix}
+  a & b \\
+  c & d
+\end{pmatrix}
+  \end{verbatim}
+  \end{multicols*}
 
 \section*{Figures}
 
@@ -270,34 +422,151 @@ Bonjour.
 \end{multicols*}
 
 \section*{Table}
-
+\subsection*{Tableau simple avec légende}
 \begin{multicols*}{2}
-
-
 \begin{lstlisting}
 \begin{table}[H]
   \centering
-  \caption{Caption for the Table.}
-  \begin{tabular}{c|cc}
-    Number &  Last Name & First Name \\
-    1 & Biggus & Dickus \\
-    2 & Monty & Python
+  \caption{Description}
+  \begin{tabular}{c|lr}
+    \toprule
+    Id & Nom & Prénom \\
+    \midrule
+    1 & Dantès & Edmond \\
+    2 & Herrera & Mercédès \\
+    3 & de Villefort & Gérard \\
+    \bottomrule
   \end{tabular}
 \end{table}
 \end{lstlisting}
 \columnbreak
 \begin{table}[H]
   \centering
-  \caption{Caption for the Table.}
-  \begin{tabular}{c|cc}
+  \caption{Description}
+  \begin{tabular}{c|lr}
     \toprule
-    Number &  Last Name & First Name \\ \midrule
-    1 & Biggus & Dickus \\
-    2 & Monty & Python \\ \bottomrule
+    Id &  Nom & Prénom \\
+    \midrule
+    1 & Dantès & Edmond \\
+    2 & Herrera & Mercédès \\
+    3 & de Villefort & Gérard \\
+    \bottomrule
   \end{tabular}
 \end{table}
+\end{multicols*}
+\subsection*{Tableau pleine largeur avec colonne variable}
+\begin{multicols*}{2}
+\begin{lstlisting}
+\begin{tabularx}{\textwidth}
+{|c|l|X|} \hline
+U & X & Y \\ \hline
+1 & a & b \\ \hline
+2 & c & d \\ \hline
+3 & e & f \\ \hline
+\end{tabularx}
+\end{lstlisting}
+\columnbreak
+\null \vskip 0.5em
+\begin{tabularx}{\columnwidth}{|c|l|X|}
+  \hline
+  U & X & Y \\ \hline
+  1 & a & b \\
+  2 & c & d \\
+  3 & e & f \\ \hline
+\end{tabularx}
+\end{multicols*}
+
+\subsection*{Tableau pleine largeur réparti}
+\begin{multicols*}{2}
+\begin{lstlisting}
+\begin{tabularx}{\textwidth}
+{p{5mm}|*4{>{}X|}}
+1 & a & bb & ccc & dddd \\
+2 & e & ff & ggg & hhhh \\
+\end{tabularx}
+\end{lstlisting}
+\columnbreak
+\null \vskip 0.5em
+\begin{tabularx}{\columnwidth}{p{5mm}|*4{>{}X|}}
+  1 & a & bb & ccc & dddd \\
+  2 & e & ff & ggg & hhhh \\
+\end{tabularx}
+\end{multicols*}
+
+\section*{Unités}
+Mode d'affichage configurable avec \code+\sisetup{per-mode=reciprocal}+ ou \code+\sisetup{per-mode=fraction}+. Les préfix d'unités tels que : \code+\kilo+, \code+\mega+, \code+\giga+, \code+\tera+, \code+\peta+, \code+\micro+\dots, peuvent être utilisés devant chaque unité.
+\begin{tabular}{ll}
+  \num{7.123456e12} & \code+\num{7.123456e12}+ \\[1em]
+	$[g] = \si{\meter \per \second \squared}$ & \code#[g] = \si{\meter\per\second\squared}#\\[1em]
+	$E = \SI[per-mode=fraction]{3.7}{\kilo\micro\volt\per\milli\meter}$ & \code#E = \SI{1.3}{\kilo\volt\per\milli\meter}#\\
+\end{tabular}
+
+\section*{Couleurs}
+Par défaut le package \emph{xcolor} supporte 68 couleurs standards (\textcolor{Apricot}{Apricot}, \textcolor{Bittersweet}{Bittersweet}, \textcolor{Rhodamine}{Rhodamine}, \textcolor{SpringGreen}{SpringGreen}, \dots). D'autres peuvent être définies par l'utilisateur.\par
+\begin{lstlisting}
+\usepackage{xcolor}
+\definecolor{Cornflower Blue}{RGB}{97, 149, 237}
+\definecolor{RAL2000}{HTML}{da6e00}
+\colorlet{corn}{Cornflower Blue}
+\colorlet{heig}{RAL2000}
+\end{lstlisting}
+
+\begin{tabularx}{\columnwidth}{lX}
+  \textcolor{red}{rouge} & \verb+\textcolor{red}{rouge}+ \\
+  \textcolor{corn}{Cornflower Blue} & \verb+\textcolor{corn}{Cornflower Blue}+ \\
+  \textcolor{JungleGreen}{JungleGreen} & \verb+\textcolor{JungleGreen}{JungleGreen}+ \\
+  \textcolor{heig}{HEIG-VD} & \verb+\textcolor{heig}{HEIG-VD}+ \\
+
+\end{tabularx}
+
+\section*{Mise en page}
+Options de \emph{geometry}: \emph{a4paper}, \emph{a4paper, landscape}, \emph{a4paper, tight}, \emph{twocolumn}\dots
+\begin{lstlisting}
+\usepackage[options]{geometry}
+\end{lstlisting}
+
+\begin{multicols*}{2}
+\includegraphics[height=6cm]{assets/layout.pdf}
+\columnbreak
+\begin{enumerate}[label=\protect\circled{\arabic*}]
+  \item 1in + \code?\hoffset?
+  \item 1in + \code?\voffset?
+  \item \code?\oddsidemargin?
+  \item \code?\topmargin?
+  \item \code?\headheight?
+  \item \code?\headsep?
+  \item \code?\textheight?
+  \item \code?\textwidth?
+  \item \code?\marginparwidth?
+  \item \code?\marginparwidth?
+  \item \code?\footskip?
+  \end{enumerate}
 
 \end{multicols*}
+
+\section*{Tiks}
+
+\begin{tikzpicture}
+  \draw[thick,rounded corners=8pt] (0,0) -- (0,2) -- (1,3.25)
+   -- (2,2) -- (2,0) -- (0,2) -- (2,2) -- (0,0) -- (2,0);
+\end{tikzpicture}
+
+\begin{tikzpicture}[domain=0:4]
+  \draw[very thin,color=gray] (-0.1,-1.1) grid (3.9,3.9);
+  \draw[->] (-0.2,0) -- (4.2,0) node[right] {$x$};
+  \draw[->] (0,-1.2) -- (0,4.2) node[above] {$f(x)$};
+  \draw[color=red]    plot (\x,\x)             node[right] {$f(x) =x$};
+  \draw[color=blue]   plot (\x,{sin(\x r)})    node[right] {$f(x) = \sin x$};
+  \draw[color=orange] plot (\x,{0.05*exp(\x)}) node[right] {$f(x) = \frac{1}{20} \mathrm e^x$};
+\end{tikzpicture}
+
+\section*{Avancé}
+\begin{lstlisting}
+\setlength{parameters}{length}
+\usecounter{counter name}
+\newcounter{counter name}
+
+\end{lstlisting}
 \end{multicols*}
 
 \end{document}
