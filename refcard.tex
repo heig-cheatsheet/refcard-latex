@@ -40,7 +40,7 @@
 \input{revision}
 
 \ifdefined\tinted
-  \pagecolor{CadetBlue!60}
+  \pagecolor{Gray!40}
 \fi
 
 \newcommand*\circled[1]{\tikz[baseline=(char.base)]{
@@ -50,7 +50,6 @@
 \definecolor{listinggray}{gray}{0.9}
 \definecolor{lbcolor}{gray}{0.92}
 \lstset{
-    backgroundcolor=\color{lbcolor},
     basicstyle=\tt,
     tabsize=2,
     language={[LaTeX]TeX},
@@ -92,8 +91,8 @@
 \setlength{\columnseprule}{0.4pt}
 
 % Titles and paragraphs more compact
-\titlespacing*{\section}{0pt}{1em}{0pt}
-\titlespacing*{\subsection}{0pt}{1em}{0pt}
+\titlespacing*{\section}{0pt}{0em}{0pt}
+\titlespacing*{\subsection}{0pt}{0em}{0pt}
 
 
 \begin{document}
@@ -631,7 +630,7 @@ Options de \emph{geometry}: \emph{a4paper}, \emph{a4paper, landscape}, \emph{a4p
 \end{lstlisting}
 
 \begin{multicols*}{2}
-\includegraphics[height=6cm]{assets/layout.pdf}
+%\includegraphics[height=6cm]{assets/layout.pdf}
 \columnbreak
 \begin{enumerate}[label=\protect\circled{\arabic*}]
   \item 1in + \code?\hoffset?
