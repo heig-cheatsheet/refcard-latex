@@ -5,7 +5,6 @@
 \usepackage[dvipsnames]{xcolor}
 \usepackage[french]{babel}
 \usepackage[fontsize=6.5pt]{scrextend}
-\usepackage[T1]{fontenc}
 \usepackage{multicol}
 \usepackage{tabularx,ragged2e}
 \usepackage{sectsty}
@@ -29,6 +28,7 @@
 \usepackage{enumitem}
 \usepackage{vwcol}
 \usepackage{microtype}
+\usepackage[newfloat]{minted}
 \usetikzlibrary{mindmap}
 \DefineVerbatimEnvironment{Code}{BVerbatim}{baseline=t}
 
@@ -47,31 +47,37 @@
             \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
 \let\code\lstinline
 
-\definecolor{listinggray}{gray}{0.9}
-\definecolor{lbcolor}{gray}{0.92}
-\lstset{
-    basicstyle=\tt,
-    tabsize=2,
-    language={[LaTeX]TeX},
-    %upquote=true,
-    aboveskip={0.4\baselineskip},
-    belowskip={0.4\baselineskip},
-    abovecaptionskip={\baselineskip},
-    belowcaptionskip={0\baselineskip},
-    columns=fixed,
-    showstringspaces=false,
-    extendedchars=true,
-    breaklines=true,
-    %prebreak = \raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
-    %frame=single,
-    showtabs=false,
-    showspaces=false,
-    showstringspaces=false,
-    identifierstyle=\ttfamily,
-    %tagstyle=\bf,
-    keywordstyle=\color{MidnightBlue},
-    commentstyle=\color{ForestGreen},
-    stringstyle=\color[rgb]{0.8,  0.1,  0.1},
+\setmonofont{Source Code Pro}
+
+% Configuration
+\renewcommand{\familydefault}{\sfdefault}
+
+\titleformat{\section}
+  {\sffamily\bfseries\fontsize{12}{15}\selectfont} % ajoute  si tu veux en gras
+  {}{0pt}{}
+
+\titleformat{\subsection}
+  {\sffamily\bfseries\fontsize{9}{11}\selectfont}
+  {}{0pt}{}
+
+\titleformat{\subsubsection}
+  {\sffamily\bfseries\fontsize{8}{10}\selectfont}
+  {}{0pt}{}
+
+% Espacements (les tiens, inchangés)
+\titlespacing*{\section}{0pt}{0ex plus .1ex minus 0.5ex}{0.5ex plus .1ex minus 0.2ex}
+\titlespacing*{\subsection}{0pt}{0.1ex plus .1ex minus 0.5ex}{0.5ex plus .1ex minus 0.2ex}
+\titlespacing*{\subsubsection}{0pt}{0.1ex plus .1ex minus 0.5ex}{0.5ex plus .1ex minus 0.2ex}
+
+\usemintedstyle{bw}
+
+\newminted{latex}{
+  fontsize=\footnotesize,
+  breaklines=true,
+  autogobble=true,
+  linenos=false,        % passe à true si tu veux des numéros de ligne
+  tabsize=3,
+  mathescape,
 }
 % Configuration
 \renewcommand{\familydefault}{\sfdefault}
@@ -94,6 +100,7 @@
 \titlespacing*{\section}{0pt}{0em}{0pt}
 \titlespacing*{\subsection}{0pt}{0em}{0pt}
 
+\newcommand{\cd}[1]{\mintinline{cpp}{#1}}
 
 \begin{document}
 
@@ -112,20 +119,19 @@ Cette carte de référence est destinée aux étudiants utilisant \LaTeX2e pour 
 
 \section*{Classes de document}
 Vous pouvez également include votre propre classe définie dans un fichier \code{.cls}.
-\begin{lstlisting}
+\begin{latexcode}
 \documentclass[11pt,a4paper,landscape,twoside]{article}
 \documentclass{report} % Dispose de \chapter
-\documentclass{book}   % Dispose de \frontmatter \mainmatter
-                       % et \backmatter
+\documentclass{book}   % Dispose de \frontmatter \mainmatter et \backmatter
 \documentclass{memoir} % Pour écrire une thèse de doctorat
 \documentclass{beamer} % Pour faire des présentation type PPT
 \documentclass{exam}   % Pour écrire des travaux écrits
 \documentclass{foobar} % Utilise la définition foobar.cls
-\end{lstlisting}
+\end{latexcode}
 
 \section*{Quelques Paquets}
 
-\begin{lstlisting}
+\begin{latexcode}
 \usepackage{caption}  % Configure les légendes
 \usepackage{amsmath}  % Configure l'affichage des équations
 \usepackage{float}    % Fixer les tables et figures
@@ -142,10 +148,10 @@ Vous pouvez également include votre propre classe définie dans un fichier \cod
 \usepackage{siunitx}  % Présentation des unités physiques
 \usepackage{tikz}     % Dessin vectoriel dans LaTeX
 
-\end{lstlisting}
+\end{latexcode}
 
 \section*{Formats et références}
-\begin{lstlisting}
+\begin{latexcode}
 \tableofcontents   % Table des matières
 \listoffigures     % Liste des figures
 \listoftables      % Liste des tableaux
@@ -163,7 +169,7 @@ Vous pouvez également include votre propre classe définie dans un fichier \cod
       \paragraph{Section 1.1.1.1}
   \subsection*{Section sans numéro}
 Comme vu au paragraphe \ref{subsec:foobar}
-\end{lstlisting}
+\end{latexcode}
 
 \section*{Polices et styles}
 \subsection*{Format de police}
@@ -205,13 +211,13 @@ Comme vu au paragraphe \ref{subsec:foobar}
 \end{itemize}
 \end{minipage}
 \begin{minipage}[c]{0.6\linewidth}
-\begin{lstlisting}
+\begin{latexcode}
 \begin{itemize}
   \item Item 1
   \item Item 2
   \item Item 3 \label{it:item3}
 \end{itemize}
-\end{lstlisting}
+\end{latexcode}
 \end{minipage}
 
 \begin{minipage}[c]{0.3\linewidth}
@@ -222,28 +228,28 @@ Comme vu au paragraphe \ref{subsec:foobar}
 \end{enumerate}
 \end{minipage}
 \begin{minipage}[c]{0.6\linewidth}
-\begin{lstlisting}
+\begin{latexcode}
 \begin{enumerate}
   \item Item 1
   \item Item 2
   \item Item 3 \label{it:item3}
 \end{enumerate}
-\end{lstlisting}
+\end{latexcode}
 \end{minipage}
-\begin{lstlisting}
+\begin{latexcode}
 \usepackage{enumitem}
 \setlist[enumerate,1]{label=\Alph*)}   % A) B) C)
 \setlist[enumerate,2]{label=\alph*)}   % a) b) c)
 \setlist[enumerate,3]{label=\roman*)}  % i) ii) iii)
 \setlist[enumerate,4]{label=\arabic*)} % 1) 2) 3)
-\end{lstlisting}
+\end{latexcode}
 
 \section*{Fichiers séparés}
-\begin{lstlisting}
+\begin{latexcode}
 \input{file.tex}   % Inclusion d'un fichier
 \include{file.tex} % Inclusion d'un fichier et nouvelle page
 \includeonly{file1.tex,file2.tex} % Inclusion de fichiers
-\end{lstlisting}
+\end{latexcode}
 
 \section*{Caractère spéciaux}
 \begin{tabular}{p{1cm}p{2cm}p{1cm}l}
@@ -292,7 +298,7 @@ Définition d'une longueur: \code!\setlength{<nom>}{<valeur>}! p.ex. \\
 \code!\setlength{\columnsep}{1cm}!
 \section*{Exemple minimal}
 
-\begin{lstlisting}
+\begin{latexcode}
 \documentclass[a4paper,11pt]{article}
 \usepackage[french]{babel}
 \author{Yves Chevallier}
@@ -304,7 +310,7 @@ Définition d'une longueur: \code!\setlength{<nom>}{<valeur>}! p.ex. \\
   \section{Introduction}
   Bonjour, monde!
 \end{document}
-\end{lstlisting}
+\end{latexcode}
 
 \section*{Math}
 
@@ -325,12 +331,12 @@ Sur plusieurs lignes :\par
 \end{multline*}
 \end{minipage}
 \begin{minipage}[c]{0.7\linewidth}
-\begin{lstlisting}
+\begin{latexcode}
 \begin{multline*}
 \sin(x)=x-\frac{x^3}{3!} \\
 +\frac{x^5}{5!}-\frac{x^7}{7!}+\cdots
 \end{multline*}
-\end{lstlisting}
+\end{latexcode}
 \end{minipage}
 
 Ou alignées :\par
@@ -341,12 +347,12 @@ Ou alignées :\par
 \end{align*}
   \end{minipage}
   \begin{minipage}[c]{0.7\linewidth}
-\begin{lstlisting}
+\begin{latexcode}
 \begin{align*}
   \nabla\cdot\boldsymbol{D} &= \rho \\
   \nabla\cdot\boldsymbol{B} &= 0 \\
 \end{align*}
-  \end{lstlisting}
+  \end{latexcode}
   \end{minipage}
 
 \subsection*{Symboles mathématiques}
@@ -460,12 +466,12 @@ Utiliser \code+\left+ (\code+\right+) pour ajuster la hauteur des parenthèses �
   \end{cases}
 \]
 \columnbreak
-\begin{lstlisting}
+\begin{latexcode}
 f_n = \begin{cases}
   a & \text{if $n=0$} \\
   r\cdot f_n{n-1} &\text{else}
 \end{cases}
-\end{lstlisting}
+\end{latexcode}
 \end{multicols*}
 
 \begin{multicols*}{2}
@@ -476,12 +482,12 @@ f_n = \begin{cases}
     \end{pmatrix}
   \]
   \columnbreak
-  \begin{lstlisting}
+  \begin{latexcode}
 \begin{pmatrix}
   a & b \\
   c & d
 \end{pmatrix}
-  \end{lstlisting}
+  \end{latexcode}
   \end{multicols*}
 
 \section*{Figures}
@@ -495,7 +501,7 @@ p & Placer la figure sur une page à part \\
 H & Force la figure à être placée ici \\
 \end{tabular}
 
-\begin{lstlisting}
+\begin{latexcode}
 \code!\graphicspath{ {images/} }! % Chemin des images
 \includegraphics[scale=1.5]{logo} % Inclure une image
 \includegraphics[scale=\textwidth]{logo} % Inclure une image
@@ -504,17 +510,17 @@ H & Force la figure à être placée ici \\
   \centering
   \includegraphics[width=0.25\textwidth]{image}
 \end{wrapfigure} % Image encapsulée dans le texte
-\end{lstlisting}
+\end{latexcode}
 \begin{multicols*}{2}
 
-\begin{lstlisting}
+\begin{latexcode}
 \begin{figure}[H]
   \centering
   \includegraphics[width=3cm]{example-image-duck}
   \caption[Canard]{Un canard}
   \label{fig:right-triangle}
 \end{figure}
-\end{lstlisting}
+\end{latexcode}
 
 \begin{figure}[H]
     \centering
@@ -528,7 +534,7 @@ H & Force la figure à être placée ici \\
 \section*{Table}
 \subsection*{Tableau simple avec légende}
 \begin{minipage}[c]{0.7\linewidth}
-\begin{lstlisting}
+\begin{latexcode}
 \begin{table}[H] \centering
 \caption{Description \label{tb:tab1}}
 \begin{tabular}{c|lr} \toprule
@@ -536,7 +542,7 @@ Id & Nom & Prénom \\ \midrule
 1 & Dantès & Edmond \\
 2 & Herrera & Mercédès \\ \bottomrule
 \end{tabular} \end{table}
-\end{lstlisting}
+\end{latexcode}
 \end{minipage}
 \begin{minipage}[c]{0.3\linewidth}
 \begin{table}[H]
@@ -555,7 +561,7 @@ Id & Nom & Prénom \\ \midrule
 
 \subsection*{Tableau pleine largeur avec colonne variable}
 \begin{multicols*}{2}
-\begin{lstlisting}
+\begin{latexcode}
 \begin{tabularx}{\textwidth}
 {|c|l|X|} \hline
 U & X & Y \\ \hline
@@ -563,7 +569,7 @@ U & X & Y \\ \hline
 2 & c & d \\ \hline
 3 & e & f \\ \hline
 \end{tabularx}
-\end{lstlisting}
+\end{latexcode}
 \columnbreak
 \null \vskip 0.5em
 \begin{tabularx}{\columnwidth}{|c|l|X|}
@@ -577,13 +583,13 @@ U & X & Y \\ \hline
 
 \subsection*{Tableau pleine largeur réparti}
 \begin{multicols*}{2}
-\begin{lstlisting}
+\begin{latexcode}
 \begin{tabularx}{\textwidth}
 {p{5mm}|*4{>{}X|}}
 1 & a & bb & ccc & dddd \\
 2 & e & ff & ggg & hhhh \\
 \end{tabularx}
-\end{lstlisting}
+\end{latexcode}
 \columnbreak
 \null \vskip 0.5em
 \begin{tabularx}{\columnwidth}{p{5mm}|*4{>{}X|}}
@@ -604,13 +610,13 @@ Mode d'affichage configurable avec \code+\sisetup{per-mode=reciprocal}+ ou \code
 
 \section*{Couleurs}
 Par défaut le package \emph{xcolor} supporte 68 couleurs standards (\textcolor{Apricot}{Apricot}, \textcolor{Bittersweet}{Bittersweet}, \textcolor{Rhodamine}{Rhodamine}, \textcolor{SpringGreen}{SpringGreen}, \dots). D'autres peuvent être définies par l'utilisateur.\par
-\begin{lstlisting}
+\begin{latexcode}
 \usepackage{xcolor}
 \definecolor{Cornflower Blue}{RGB}{97, 149, 237}
 \definecolor{RAL2000}{HTML}{da6e00}
 \colorlet{corn}{Cornflower Blue}
 \colorlet{heig}{RAL2000}
-\end{lstlisting}
+\end{latexcode}
 
 \begin{tabularx}{\columnwidth}{lX}
   \textcolor{red}{rouge} & \verb+\textcolor{red}{rouge}+ \\
@@ -622,12 +628,12 @@ Par défaut le package \emph{xcolor} supporte 68 couleurs standards (\textcolor{
 
 \section*{Mise en page}
 Options de \emph{geometry}: \emph{a4paper}, \emph{a4paper, landscape}, \emph{a4paper, tight}, \emph{twocolumn}\dots
-\begin{lstlisting}
+\begin{latexcode}
 \usepackage[options]{geometry}
 \usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
 \usepackage[a4paper,landscape,tight,twocolumn]{geometry}
 
-\end{lstlisting}
+\end{latexcode}
 
 \begin{multicols*}{2}
 %\includegraphics[height=6cm]{assets/layout.pdf}
@@ -702,7 +708,7 @@ Options de \emph{geometry}: \emph{a4paper}, \emph{a4paper, landscape}, \emph{a4p
 % \end{tikzpicture}
 % }
 % \columnbreak
-% \begin{lstlisting}
+% \begin{latexcode}
 %   \begin{tikzpicture}[
 %     mindmap,
 %     concept color = gray!30,
@@ -733,21 +739,21 @@ Options de \emph{geometry}: \emph{a4paper}, \emph{a4paper, landscape}, \emph{a4p
 %   };
 
 %   \end{tikzpicture}
-% \end{lstlisting}
+% \end{latexcode}
 % \end{multicols*}
 
 % \section*{Bibliographie}
 
 \section*{Compteurs}
-\begin{lstlisting}
+\begin{latexcode}
 \setlength{parameters}{length}
 \usecounter{counter name}
 \newcounter{counter name}
-\end{lstlisting}
+\end{latexcode}
 
 \section*{Code source}
 Deux paquets : \emph{listing} ou \emph{minted}.
-\begin{lstlisting}
+\begin{latexcode}
 \usepackage{listing}
 \lstset{
   backgroundcolor=\color{FloralWhite},
@@ -763,13 +769,13 @@ Deux paquets : \emph{listing} ou \emph{minted}.
   stringstyle=\color[rgb]{0.8,  0.1,  0.1},
 }
 \lstinputlisting{code.cpp} % Inclus un fichier
-\begin{lstlisting}...\ end{lstlisting} % Extrait de code
+\begin{latexcode}...\ end{latexcode} % Extrait de code
 
 \begin{listing}[h] % Extrait de code avec titre
   \inputminted{python}{assets/code.py} % Utilise minted
   \caption{Description \label{py:code}}
 \end{listing}
-\end{lstlisting}
+\end{latexcode}
 
 \section*{Références}
 \begin{tabular}{p{1.8cm}p{2.2cm}p{2cm}l}
