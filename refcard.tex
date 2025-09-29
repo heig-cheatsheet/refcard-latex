@@ -42,6 +42,11 @@
   \pagecolor{Gray!40}
 \fi
 
+\newenvironment{tighttabbing}
+  {\begingroup\setlength{\parskip}{0pt}\begin{tabbing}}
+  {\end{tabbing}\endgroup}
+
+
 \newcommand*\circled[1]{\tikz[baseline=(char.base)]{
             \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
 \let\code\lstinline
@@ -51,6 +56,7 @@
 % Configuration
 \renewcommand{\familydefault}{\sfdefault}
 
+% Tailles des titres (s'applique aussi aux versions étoilées *)
 \titleformat{\section}
   {\sffamily\bfseries\fontsize{12}{15}\selectfont} % ajoute  si tu veux en gras
   {}{0pt}{}
@@ -68,6 +74,9 @@
 \titlespacing*{\subsection}{0pt}{0.1ex plus .1ex minus 0.5ex}{0.5ex plus .1ex minus 0.2ex}
 \titlespacing*{\subsubsection}{0pt}{0.1ex plus .1ex minus 0.5ex}{0.5ex plus .1ex minus 0.2ex}
 
+\pagenumbering{gobble} % pas de numéros de page
+
+
 \usemintedstyle{bw}
 
 \newminted{latex}{
@@ -82,9 +91,6 @@
 \renewcommand{\familydefault}{\sfdefault}
 
 \allsectionsfont{\sffamily}
-
-% No pages numbering
-\pagenumbering{gobble}
 
 \newlength\mybaselinestretch
 \mybaselinestretch=0pt plus 0.02pt\relax
@@ -102,211 +108,234 @@
 \newcommand{\cd}[1]{\mintinline{cpp}{#1}}
 
 \begin{document}
-
+\raggedcolumns
 \begin{multicols*}{3}
+\raggedbottom
 \begin{tabularx}{\columnwidth}{lX}
     \raisebox{-\totalheight}{\includegraphics[width=1cm]{assets/heig-vd-black.pdf}} &
-\begin{center}
-  {\Large \bf Carte de référence \LaTeX} \\
-  version \revision \ -- \revisiondate \\
-\end{center}
+    \begin{center}
+        {\Large \bf Carte de référence \LaTeX} \\
+        version \revision \ -- \revisiondate \\
+    \end{center}
 \end{tabularx}
 {
-\scriptsize
 Cette carte de référence est destinée aux étudiants utilisant \LaTeX2e pour leurs rapports de travaux pratiques ou rapports de travail de Bachelor. Cette carte comprend une liste non exhaustive des possibilités du langage \LaTeX~ résumé en une feuille A4 recto-verso. Ce document est en partie inspiré de \emph{Learn X in Y}. Il est également destiné aux étudiants qui souhaitent apprendre \LaTeX2e dans le cadre du cours de HES d'été.
 }
 
 \section*{Classes de document}
 Vous pouvez également inclure votre propre classe définie dans un fichier \code{.cls}.
 \begin{latexcode}
-\documentclass[11pt,a4paper,landscape,twoside]{article}
-\documentclass{report} % Dispose de \chapter
-\documentclass{book}   % Dispose de \frontmatter \mainmatter et \backmatter
-\documentclass{memoir} % Pour écrire une thèse de doctorat
-\documentclass{beamer} % Pour faire des présentation type PPT
-\documentclass{exam}   % Pour écrire des travaux écrits
-\documentclass{foobar} % Utilise la définition foobar.cls
+    \documentclass[11pt,a4paper,landscape,twoside]{article}
+    \documentclass{report} % Dispose de \chapter
+    \documentclass{book}   % Dispose de \frontmatter \mainmatter et \backmatter
+    \documentclass{memoir} % Pour écrire une thèse de doctorat
+    \documentclass{beamer} % Pour faire des présentation type PPT
+    \documentclass{exam}   % Pour écrire des travaux écrits
+    \documentclass{foobar} % Utilise la définition foobar.cls
 \end{latexcode}
 
 \section*{Quelques Paquets}
 
 \begin{latexcode}
-\usepackage{caption}  % Configure les légendes
-\usepackage{amsmath}  % Configure l'affichage des équations
-\usepackage{float}    % Fixer les tables et figures
-\usepackage{graphicx} % Inclusion d'images pdf, png...
-\usepackage{longtable} % Tableaux sur plusieurs pages
-\usepackage{booktabs} % Meilleure présentation des tableaux
-\usepackage{tabularx} % Tableaux avec colonnes flexibles
-\usepackage{listings} % Inclusion de code avec syntaxe
-\usepackage{xcolor}   % Usage des couleurs
-\usepackage{hyperref} % Hyperliens pour documents PDF
-\usepackage{fancyhdr} % En-tête et pieds de pages
-\usepackage{geometry} % Configuration des marges
-\usepackage{babel}    % Conventions linguistiques
-\usepackage{siunitx}  % Présentation des unités physiques
-\usepackage{tikz}     % Dessin vectoriel dans LaTeX
-\usepackage{wrapfig}  % Figures avec habillage de texte
-\usepackage{subcaption} % Sous-figures et sous-tables
-\usepackage{multicol} % Colonnes multiples
+    \usepackage{caption}    % Configure les légendes
+    \usepackage{amsmath}    % Configure l'affichage des équations
+    \usepackage{float}      % Fixer les tables et figures
+    \usepackage{graphicx}   % Inclusion d'images pdf, png...
+    \usepackage{longtable}  % Tableaux sur plusieurs pages
+    \usepackage{booktabs}   % Meilleure présentation des tableaux
+    \usepackage{tabularx}   % Tableaux avec colonnes flexibles
+    \usepackage{listings}   % Inclusion de code avec syntaxe
+    \usepackage{xcolor}     % Usage des couleurs
+    \usepackage{hyperref}   % Hyperliens pour documents PDF
+    \usepackage{fancyhdr}   % En-tête et pieds de pages
+    \usepackage{geometry}   % Configuration des marges
+    \usepackage{babel}      % Conventions linguistiques
+    \usepackage{siunitx}    % Présentation des unités physiques
+    \usepackage{tikz}       % Dessin vectoriel dans LaTeX
+    \usepackage{wrapfig}    % Figures avec habillage de texte
+    \usepackage{subcaption} % Sous-figures et sous-tables
+    \usepackage{multicol}   % Colonnes multiples
 
 \end{latexcode}
 
 \section*{Formats et références}
 \begin{latexcode}
-\tableofcontents   % Table des matières
-\listoffigures     % Liste des figures
-\listoftables      % Liste des tableaux
-\listoflistings    % Liste des listes de code
-\index             % Index des termes
-\printindex        % Affichage de l'index
-\printglossary     % Affichage du glossaire
-\printbibliography % Affichage de la bibliographie
+    \tableofcontents   % Table des matières
+    \listoffigures     % Liste des figures
+    \listoftables      % Liste des tableaux
+    \listoflistings    % Liste des listes de code
+    \index             % Index des termes
+    \printindex        % Affichage de l'index
+    \printglossary     % Affichage du glossaire
+    \printbibliography % Affichage de la bibliographie
 
-\chapter[Description courte]{Description longue}
-\label{subsec:foobar}
-\section{Section 1}
-  \subsection{Section 1.1}
+    \chapter[Description courte]{Description longue}
+    \label{subsec:foobar}
+    \section{Section 1}
+    \subsection{Section 1.1}
     \subsubsection{Section 1.1.1}
-      \paragraph{Section 1.1.1.1}
-  \subsection*{Section sans numéro}
-Comme vu au paragraphe \ref{subsec:foobar}
+    \paragraph{Section 1.1.1.1}
+    \subsection*{Section sans numéro}
+    Comme vu au paragraphe \ref{subsec:foobar}
 \end{latexcode}
 
 \section*{Commandes pratiques}
 \begin{tabular}{*2{>{}l}}
-\code!\today! & Date du jour \\
-\code!\LaTeX! & Logo \LaTeX \\
-\code!\TeX! & Logo \TeX \\
-\code!\newpage! & Nouvelle page \\
-\code!\clearpage! & Nouvelle page + vider les flottants \\
-\code!\pagebreak! & Saut de page \\
-\code!\linebreak! & Saut de ligne \\
-\code!\noindent! & Pas d'indentation \\
-\code!\phantom{texte}! & Espace invisible de la taille du texte \\
-\code!\hphantom{texte}! & Espace horizontal invisible \\
-\code!\vphantom{texte}! & Espace vertical invisible \\
-\code!\protect! & Protéger une commande fragile \\
+    \code!\today!           & Date du jour                           \\
+    \code!\LaTeX!           & Logo \LaTeX                            \\
+    \code!\TeX!             & Logo \TeX                              \\
+    \code!\newpage!         & Nouvelle page                          \\
+    \code!\clearpage!       & Nouvelle page + vider les flottants    \\
+    \code!\pagebreak!       & Saut de page                           \\
+    \code!\linebreak!       & Saut de ligne                          \\
+    \code!\noindent!        & Pas d'indentation                      \\
+    \code!\phantom{texte}!  & Espace invisible de la taille du texte \\
+    \code!\hphantom{texte}! & Espace horizontal invisible            \\
+    \code!\vphantom{texte}! & Espace vertical invisible              \\
+    \code!\protect!         & Protéger une commande fragile          \\
 \end{tabular}
 
 \section*{Polices et styles}
 \subsection*{Format de police}
 \begin{tabularx}{\columnwidth}{lX}
-\lstinline{\\textbf\{Texte en gras\}} & \textbf{Texte en gras} \\
-\lstinline{\\textit\{Texte en italique\}} & \textit{Texte en italique} \\
-\lstinline{\\texttt\{Texte en imprimerie\}} & \texttt{Texte en imprimerie} \\
-\lstinline{\\textsc\{Texte en capitales\}} & \textsc{Texte en capitales} \\
-\lstinline{\\textsf\{Texte sans-serif\}} & \textsf{Texte sans-serif} \\
-\lstinline{\\emph\{Emphase\}} & \emph{Emphase} \\
-\lstinline{\\fbox\{Encadré\}} & \fbox{Encadré} \\
+    \lstinline{\\textbf\{Texte en gras\}}       & \textbf{Texte en gras}       \\
+    \lstinline{\\textit\{Texte en italique\}}   & \textit{Texte en italique}   \\
+    \lstinline{\\texttt\{Texte en imprimerie\}} & \texttt{Texte en imprimerie} \\
+    \lstinline{\\textsc\{Texte en capitales\}}  & \textsc{Texte en capitales}  \\
+    \lstinline{\\textsf\{Texte sans-serif\}}    & \textsf{Texte sans-serif}    \\
+    \lstinline{\\emph\{Emphase\}}               & \emph{Emphase}               \\
+    \lstinline{\\fbox\{Encadré\}}               & \fbox{Encadré}               \\
 \end{tabularx}
 
 \subsection*{Taille de polices}
 \begin{multicols*}{2}
-  \begin{tabularx}{\columnwidth}{lX}
-    \lstinline{\\tiny\{Tiny\}} & \tiny{Tiny} \\
-    \lstinline{\\scriptsize\{Script\}} & \scriptsize{Script} \\
-    \lstinline{\\footnotesize\{Footnote\}} & \footnotesize{Footnote} \\
-    \lstinline{\\small\{Small\}} & \small{Small} \\
-    \lstinline{\\normalsize\{Normal\}} & \normalsize{Normal} \\
+    \begin{tabularx}{\columnwidth}{lX}
+        \lstinline{\\tiny\{Tiny\}}             & \tiny{Tiny}             \\
+        \lstinline{\\scriptsize\{Script\}}     & \scriptsize{Script}     \\
+        \lstinline{\\footnotesize\{Footnote\}} & \footnotesize{Footnote} \\
+        \lstinline{\\small\{Small\}}           & \small{Small}           \\
+        \lstinline{\\normalsize\{Normal\}}     & \normalsize{Normal}     \\
     \end{tabularx}
-  \columnbreak
-  \begin{tabularx}{\columnwidth}{lX}
-    \lstinline{\\large\{Large\}} & \large{Large} \\
-    \lstinline{\\Large\{Large\}} & \Large{Large} \\
-    \lstinline{\\LARGE\{LARGE\}} & \LARGE{LARGE} \\
-    \lstinline{\\huge\{Huge\}} & \huge{Huge} \\
-    \lstinline{\\Huge\{Huge\}} & \Huge{Huge} \\
-  \end{tabularx}
+    \columnbreak
+    \begin{tabularx}{\columnwidth}{lX}
+        \lstinline{\\large\{Large\}} & \large{Large} \\
+        \lstinline{\\Large\{Large\}} & \Large{Large} \\
+        \lstinline{\\LARGE\{LARGE\}} & \LARGE{LARGE} \\
+        \lstinline{\\huge\{Huge\}}   & \huge{Huge}   \\
+        \lstinline{\\Huge\{Huge\}}   & \Huge{Huge}
+    \end{tabularx}
 \end{multicols*}
 
 \subsection*{Listes}
 \begin{minipage}[c]{0.3\linewidth}
-\begin{itemize}
-  \item Item 1
-  \item Item 2
-  \item Item 3
-\end{itemize}
+    \begin{itemize}
+        \item Item 1
+        \item Item 2
+        \item Item 3
+    \end{itemize}
 \end{minipage}
 \begin{minipage}[c]{0.6\linewidth}
-\begin{latexcode}
-\begin{itemize}
-  \item Item 1
-  \item Item 2
-  \item Item 3 \label{it:item3}
-\end{itemize}
-\end{latexcode}
+    \begin{latexcode}
+        \begin{itemize}
+            \item Item 1
+            \item Item 2
+            \item Item 3 \label{it:item3}
+        \end{itemize}
+    \end{latexcode}
 \end{minipage}
 
 \begin{minipage}[c]{0.3\linewidth}
-\begin{enumerate}
-  \item Item 1
-  \item Item 2
-  \item Item 3
-\end{enumerate}
+    \begin{enumerate}
+        \item Item 1
+        \item Item 2
+        \item Item 3
+    \end{enumerate}
 \end{minipage}
 \begin{minipage}[c]{0.6\linewidth}
-\begin{latexcode}
-\begin{enumerate}
-  \item Item 1
-  \item Item 2
-  \item Item 3 \label{it:item3}
-\end{enumerate}
-\end{latexcode}
+    \begin{latexcode}
+        \begin{enumerate}
+            \item Item 1
+            \item Item 2
+            \item Item 3 \label{it:item3}
+        \end{enumerate}
+    \end{latexcode}
 \end{minipage}
 \begin{latexcode}
-\usepackage{enumitem}
-\setlist[enumerate,1]{label=\Alph*)}   % A) B) C)
-\setlist[enumerate,2]{label=\alph*)}   % a) b) c)
-\setlist[enumerate,3]{label=\roman*)}  % i) ii) iii)
-\setlist[enumerate,4]{label=\arabic*)} % 1) 2) 3)
+    \usepackage{enumitem}
+    \setlist[enumerate,1]{label=\Alph*)}   % A) B) C)
+    \setlist[enumerate,2]{label=\alph*)}   % a) b) c)
+    \setlist[enumerate,3]{label=\roman*)}  % i) ii) iii)
+    \setlist[enumerate,4]{label=\arabic*)} % 1) 2) 3)
 \end{latexcode}
 
 \section*{Fichiers séparés}
 \begin{latexcode}
-\input{file.tex}   % Inclusion d'un fichier
-\include{file.tex} % Inclusion d'un fichier et nouvelle page
-\includeonly{file1.tex,file2.tex} % Inclusion de fichiers
+    \input{file.tex}   % Inclusion d'un fichier
+    \include{file.tex} % Inclusion d'un fichier et nouvelle page
+    \includeonly{file1.tex,file2.tex} % Inclusion de fichiers
 \end{latexcode}
 
 \section*{Caractère spéciaux}
-\begin{tabular}{p{1cm}p{2cm}p{1cm}l}
-\S & \code+\S+ & \textasciicircum &\code+\textasciicircum+ \\
-\textasciitilde &\code+\textasciitilde+ & \textbackslash &\code+\textbackslash+ \\
-\textbar &\code+\textbar+ & \textbraceleft &\code+\textbraceleft+ \\
-\textbraceright &\code+\textbraceright+ & \textbullet & \code+\textbullet+ \\
-\textcent & \code+\textcent+ & \textdollar & \code+\textdollar+ \\
-$\ldots$ & \code+$\ldots$+ & $\widehat{oo}$ & \code+$\widehat{oo}$+ \\
-$\clubsuit$ & \code+$\clubsuit$+ & $\spadesuit$ & \code+$\spadesuit$+ \\
-\end{tabular}
+\begin{multicols*}{4}
+\begin{tighttabbing}
+    aa \= a \kill
+    \S              \> \code+\S+              \\
+    \textasciicircum \> \code+\textasciicircum+ \\
+    \textasciitilde \> \code+\textasciitilde+ \\
+    \textbackslash   \> \code+\textbackslash+   \\
+    \textbar        \> \code+\textbar+        \\
+    \textbraceleft   \> \code+\textbraceleft+   \\
+    \textbraceright \> \code+\textbraceright+ \\
+    \textbullet      \> \code+\textbullet+      \\
+    \textcent       \> \code+\textcent+       \\
+    \textdollar      \> \code+\textdollar+      \\
+    $\ldots$        \> \code+$\ldots$+        \\
+    $\widehat{oo}$   \> \code+$\widehat{oo}$+   \\
+    $\clubsuit$     \> \code+$\clubsuit$+     \\
+    $\spadesuit$     \> \code+$\spadesuit$+     \\
+\end{tighttabbing}
+\end{multicols*}
 
-\subsection*{Accents français}
-\begin{tabular}{p{1.5cm}p{2cm}p{1.5cm}l}
-à & \code+\`{a}+ ou \verb+à+ & é & \code+\'{e}+ ou \verb+é+ \\
-è & \code+\`{e}+ ou \verb+è+ & ê & \code+\^{e}+ ou \verb+ê+ \\
-ë & \code+\"{e}+ ou \verb+ë+ & ç & \code+\c{c}+ ou \verb+ç+ \\
-î & \code+\^{i}+ ou \verb+î+ & ï & \code+\"{i}+ ou \verb+ï+ \\
-ô & \code+\^{o}+ ou \verb+ô+ & ù & \code+\`{u}+ ou \verb+ù+ \\
-û & \code+\^{u}+ ou \verb+û+ & ü & \code+\"{u}+ ou \verb+ü+ \\
-\end{tabular}
+% \subsection*{Accents français}
+% \begin{multicols*}{4}
+% \begin{tighttabbing}
+%     aa \= a \kill
+%     à \> \code+\`{a}+ ou \verb+à+ \\
+%     é \> \code+\'{e}+ ou \verb+é+ \\
+%     è \> \code+\`{e}+ ou \verb+è+ \\
+%     ê \> \code+\^{e}+ ou \verb+ê+ \\
+%     ë \> \code+\"{e}+ ou \verb+ë+ \\
+%     ç \> \code+\c{c}+ ou \verb+ç+ \\
+%     î \> \code+\^{i}+ ou \verb+î+ \\
+%     ï \> \code+\"{i}+ ou \verb+ï+ \\
+%     ô \> \code+\^{o}+ ou \verb+ô+ \\
+%     ù \> \code+\`{u}+ ou \verb+ù+ \\
+%     û \> \code+\^{u}+ ou \verb+û+ \\
+%     ü \> \code+\"{u}+ ou \verb+ü+
+% \end{tighttabbing}
+% \end{multicols*}
 
-Avec \emph{babel} français et encodage UTF-8, les accents peuvent être tapés directement.
+% Avec \emph{babel} français et encodage UTF-8, les accents peuvent être tapés directement.
 
 \subsection*{Espaces et typographie}
-\begin{tabular}{*2{>{}l}}
-\code!\,! ou \code!\ ! & Espace fine (avant : ; ! ?) \\
-\code!\quad! & Espace large (1 em) \\
-\code!\qquad! & Espace très large (2 em) \\
-\code!~! & Espace insécable \\
-\code!\@! & Espace normale après un point \\
-\code!\\! & Saut de ligne \\
-\code!\\*! & Saut de ligne sans saut de page \\
-\code!\-! & Césure suggérée \\
-\code!\mbox{texte}! & Empêcher la césure \\
-\code!\hyphenation{mots}! & Définition des césures \\
-\end{tabular}
+\begin{multicols*}{2}
+\begin{tighttabbing}
+    aaaaaa \= a \kill
+\code!\,! ou \code!\ !    \> Espace fine (avant : ; ! ?)   \\
+    \code!\quad!          \> Espace large (1 em)           \\
+    \code!\qquad!         \> Espace très large (2 em)      \\
+    \code!~!              \> Espace insécable              \\
+    \code!\@!             \> Espace normale après un point \\
+    \code!\\!             \> Saut de ligne \\
+    \code!\\*!            \> Saut de ligne sans saut de page \\
+    \code!\-!                 \> Césure suggérée               \\
+    \code!\mbox{texte}!        Empêcher la césure            \\
+    \code!\hyphenation{mots}!  Définition des césures
+\end{tighttabbing}
+\end{multicols*}
 
-Règles typographiques françaises : espace fine insécable avant \code!: ; ! ?! et après les guillemets \og{} et \fg{}.
+
+Règles typo. françaises : espace fine insécable avant \code!: ; ! ?! et après les guillemets \og{} et \fg{}.
 
 
 \subsection*{Alignement et espacements}
@@ -329,400 +358,446 @@ Règles typographiques françaises : espace fine insécable avant \code!: ; ! ?!
 \code!\begin{verse}! & Poésie, vers \\
 \code!\begin{abstract}! & Résumé \\
 \code!\begin{appendix}! & Section annexe \\
-\code!\begin{verbatim}! & Texte littéral (sans interprétation) \\
+%\code!\begin{verbatim}! & Texte littéral (sans interprétation) \\
 \code!\begin{minipage}{width}! & Page réduite dans la page \\
 \end{tabular}
 
 \section*{Unités internes et longueurs}
 \begin{tabular}{ll|ll|ll|ll}
-Points ($\SI{351.46}{\mu\meter}$) & \code+pt+ & Millimètres & \code+mm+ & Pouce ($\SI{2.54}{\centi\metre}$)& \code+in+ & Largeur d'un M & \code+em+ \\
-Pixel & \code+px+ & Centimètres & \code+cm+ & Pica (12 Points) & \code+pc+ & Hauteur d'un X & \code+ex+ \\
+    Points ($\SI{351.46}{\mu\meter}$) & \code+pt+ & Millimètres & \code+mm+ & Pouce ($\SI{2.54}{\centi\metre}$) & \code+in+ & Largeur d'un M & \code+em+ \\
+    Pixel                             & \code+px+ & Centimètres & \code+cm+ & Pica (12 Points)                  & \code+pc+ & Hauteur d'un X & \code+ex+ \\
 \end{tabular}
 
 \begin{tabular}{*2{>{}l}}
-\code!\baselineskip! & Espacement vertical entre paragraphes \\
-\code!\columnsep! & Espacement horizontal entre colonnes \\
-\code!\columnwidth! & Largeur d'une colonne \\
-\code!\linewidth! & Largeur de la ligne dans l'environnement courant \\
-\code!\textwidth! & Largeur de la page moins les marges \\
-\code!\parskip! & Espacement horizontal de la première ligne \\
-\code!\paperwidth! & Largeur de la page \\
-\code!\paperheight! & Hauteur de la page \\
-\code!0.25\textwidth! & \SI{25}{\percent} de la largeur de la page \\
+    \code!\baselineskip!  & Espacement vertical entre paragraphes            \\
+    \code!\columnsep!     & Espacement horizontal entre colonnes             \\
+    \code!\columnwidth!   & Largeur d'une colonne                            \\
+    \code!\linewidth!     & Largeur de la ligne dans l'environnement courant \\
+    \code!\textwidth!     & Largeur de la page moins les marges              \\
+    \code!\parskip!       & Espacement horizontal de la première ligne       \\
+    \code!\paperwidth!    & Largeur de la page                               \\
+    \code!\paperheight!   & Hauteur de la page                               \\
+    \code!0.25\textwidth! & \SI{25}{\percent} de la largeur de la page       \\
 \end{tabular}
 
 Définition d'une longueur: \code!\setlength{<nom>}{<valeur>}! p.ex. \\
 \code!\setlength{\columnsep}{1cm}!
-\section*{Exemple minimal}
+% \section*{Exemple minimal}
 
-\begin{latexcode}
-\documentclass[a4paper,11pt]{article}
-\usepackage[french]{babel}
-\author{Yves Chevallier}
-\date{\today}
-\title{Apprendre \LaTeX{} avec plaisir}
-\begin{document}
-  \maketitle \newpage
-  \tableofcontents
-  \section{Introduction}
-  Bonjour, monde!
-\end{document}
-\end{latexcode}
+% \begin{multicols*}{2}
+% \begin{latexcode}
+%     \documentclass[a4paper,11pt]{article}
+%     \usepackage[french]{babel}
+%     \author{Yves Chevallier}
+%     \date{\today}
+%     \title{Apprendre \LaTeX{} avec joie}
+%     \begin{document}
+%     \maketitle \newpage
+%     \tableofcontents
+%     \section{Introduction}
+%     Bonjour, monde!
+%     \end{document}
+% \end{latexcode}
+% \end{multicols*}
 
 \section*{Math}
 
 \begin{tabularx}{\columnwidth}{lX}
-    \lstinline{a^2 + b^2 = c^2} & $a^2 + b^2 = c^2$ \\
-    \lstinline{$...$} & Mode math en ligne \\
-    \lstinline{$$...$$} & Mode math multi-ligne \\
-    \lstinline{\\[...\\]} & Mode math multi-ligne \\
-    \lstinline{\\begin\{equation\}...\\end\{equation\}} & Équation numérotée \\
-    \lstinline{\\begin\{equation*\}...\\end\{equation*\}} & Équation non numérotée \\
+    \lstinline{a^2 + b^2 = c^2} & $a^2 + b^2 = c^2$     \\
+    \lstinline{$...$}           & Mode math en ligne    \\
+    \lstinline{$$...$$}         & Mode math multi-ligne \\
+    \lstinline{                                         \\[...\\]} & Mode math multi-ligne \\
+    \lstinline{\\begin\{equation\}...                   \\end\{equation\}} & Équation numérotée \\
+    \lstinline{\\begin\{equation*\}...                  \\end\{equation*\}} & Équation non numérotée \\
 \end{tabularx}
 
 Sur plusieurs lignes :\par
 \begin{minipage}[c]{0.3\linewidth}
-\begin{multline*}
-\sin(x)=x-\frac{x^3}{3!} \\
-+\frac{x^5}{5!}-\frac{x^7}{7!}+\cdots
-\end{multline*}
+    \begin{multline*}
+        \sin(x)=x-\frac{x^3}{3!} \\
+        +\frac{x^5}{5!}-\frac{x^7}{7!}+\cdots
+    \end{multline*}
 \end{minipage}
 \begin{minipage}[c]{0.7\linewidth}
-\begin{latexcode}
-\begin{multline*}
-\sin(x)=x-\frac{x^3}{3!} \\
-+\frac{x^5}{5!}-\frac{x^7}{7!}+\cdots
-\end{multline*}
-\end{latexcode}
+    \begin{latexcode}
+        \begin{multline*}
+            \sin(x)=x-\frac{x^3}{3!} \\
+            +\frac{x^5}{5!}-\frac{x^7}{7!}+\cdots
+        \end{multline*}
+    \end{latexcode}
 \end{minipage}
 
 Ou alignées :\par
 \begin{minipage}[c]{0.3\linewidth}
-\begin{align*}
-  \nabla\cdot\boldsymbol{D} &= \rho \\
-  \nabla\cdot\boldsymbol{B} &= 0 \\
-\end{align*}
-  \end{minipage}
-  \begin{minipage}[c]{0.7\linewidth}
-\begin{latexcode}
-\begin{align*}
-  \nabla\cdot\boldsymbol{D} &= \rho \\
-  \nabla\cdot\boldsymbol{B} &= 0 \\
-\end{align*}
-  \end{latexcode}
-  \end{minipage}
+    \begin{align*}
+        \nabla\cdot\boldsymbol{D} & = \rho \\
+        \nabla\cdot\boldsymbol{B} & = 0    \\
+    \end{align*}
+\end{minipage}
+\begin{minipage}[c]{0.7\linewidth}
+    \begin{latexcode}
+        \begin{align*}
+            \nabla\cdot\boldsymbol{D} & = \rho \\
+            \nabla\cdot\boldsymbol{B} & = 0    \\
+        \end{align*}
+    \end{latexcode}
+\end{minipage}
 
 \subsection*{Symboles mathématiques}
-\begin{multicols*}{2}
-    \begin{tabularx}{\columnwidth}{lX}
-        $\alpha A$ & \lstinline{\\alpha A} \\
-        $\beta B$ & \lstinline{\\beta B} \\
-        $\gamma \Gamma$ & \lstinline{\\gamma \\Gamma} \\
-        $\delta \Delta$ & \lstinline{\\delta \\Delta} \\
-        $\epsilon \varepsilon E$ & \lstinline{\\epsilon \\varepsilon E} \\
-        $\zeta Z Z$ & \lstinline{\\zeta Z} \\
-        $\eta H$ & \lstinline{\\eta H} \\
-        $\theta \vartheta \Theta$ & \lstinline{\\theta \\vartheta \\Theta} \\
-        $\iota I$ & \lstinline{\\iota I} \\
-        $\kappa K$ & \lstinline{\\kappa K} \\
-        $\lambda \Lambda$ & \lstinline{\\lambda \\Lambda} \\
-        $\mu M$ & \lstinline{\\mu M} \\
-        $\nu N$ & \lstinline{\\nu N} \\
-        $\xi \Xi$ & \lstinline{\\xi \\Xi} \\
-        $o O$ & \lstinline{o O} \\
-        $\pi \Pi$ & \lstinline{\\pi \\Pi} \\
-        $\rho \varrho P$ & \lstinline{\\rho \\varrho P} \\
-        $\sigma \Sigma$ & \lstinline{\\sigma \\Sigma} \\
-        $\tau T$ & \lstinline{\\tau T} \\
-        $\upsilon \Upsilon$ & \lstinline{\\upsilon \\Upsilon} \\
-        $\phi \varphi \Phi$ & \lstinline{\\phi \\varphi \\Phi} \\
-        $\chi X$ & \lstinline{\\chi X} \\
-    $\psi \Psi$ & \lstinline{\\psi \\Psi} \\
-\end{tabularx}
-\columnbreak
-\begin{tabularx}{\columnwidth}{lX}
-    $\omega \Omega$ & \lstinline{\\omega \\Omega} \\
-    $\leftarrow$ & \lstinline{\\leftarrow} \\
-    $\rightarrow$ & \lstinline{\\rightarrow} \\
-    $\Leftarrow$ & \lstinline{\\Leftarrow} \\
-    $\Rightarrow$ & \lstinline{\\Rightarrow} \\
-    $\infty$ & \lstinline{\\infty} \\
-    $\forall$ & \lstinline{\\forall} \\
-    $\Re$ & \lstinline{\\Re} \\
-    $\Im$ & \lstinline{\\Im} \\
-    $\nabla$ & \lstinline{\\nabla} \\
-    $\exists$ & \lstinline{\\exists} \\
-    $\nexists$ & \lstinline{\\nexists} \\
-    $\partial$ & \lstinline{\\partial} \\
-    $\triangle$ & \lstinline{\\triangle} \\
-    $\blacksquare$ & \lstinline{\\blacksquare} \\
-    $\times$ & \lstinline{\\times} \\
-    $\cdot$ & \lstinline{\\cdot} \\
-    $\leq$ & \lstinline{\\leq} \\
-    $\geq$ & \lstinline{\\geq} \\
-    $\in$ & \lstinline{\\in} \\
-    $\notin$ & \lstinline{\\notin} \\
-    $\vee$ & \lstinline{\\vee} \\
-\end{tabularx}
+\begin{multicols*}{3}
+    \begin{tighttabbing}
+        aaaaa \= a \kill
+        $\alpha A$                \> \lstinline{\alpha A} \\
+        $\beta B$                 \> \lstinline{\beta B} \\
+        $\gamma \Gamma$           \> \lstinline{\gamma \\Gamma} \\
+        $\delta \Delta$           \> \lstinline{\delta \\Delta} \\
+        $\epsilon E$  \> \lstinline{\epsilon E} \\
+        $\varepsilon$ \> \lstinline{\varepsilon} \\
+        $\zeta Z Z$               \> \lstinline{\zeta Z} \\
+        $\eta H$                  \> \lstinline{\eta H} \\
+        $\theta \vartheta$ \> \lstinline{\theta \\vartheta} \\
+        $\Theta$                   \> \lstinline{\Theta} \\
+        $\iota I$                 \> \lstinline{\iota I} \\
+        $\kappa K$                \> \lstinline{\kappa K} \\
+        $\lambda \Lambda$         \> \lstinline{\lambda \\Lambda} \\
+        $\mu M$                   \> \lstinline{\mu M} \\
+        $\nu N$                   \> \lstinline{\nu N} \\
+        $\xi \Xi$                 \> \lstinline{\xi \\Xi} \\
+        $o O$                     \> \lstinline{o O} \\
+        $\pi \Pi$                 \> \lstinline{\pi \\Pi} \\
+        $\rho \varrho P$          \> \lstinline{\rho \\varrho P} \\
+        $\sigma \Sigma$           \> \lstinline{\sigma \\Sigma} \\
+        $\tau T$                  \> \lstinline{\tau T} \\
+        $\upsilon \Upsilon$       \> \lstinline{\upsilon \\Upsilon} \\
+        $\phi \varphi \Phi$       \> \lstinline{\phi \\varphi \\Phi} \\
+        $\chi X$                  \> \lstinline{\chi X} \\
+        $\psi \Psi$               \> \lstinline{\psi \\Psi} \\
+        $\omega \Omega$ \> \lstinline{\omega \\Omega} \\
+        $\leftarrow$    \> \lstinline{\leftarrow} \\
+        $\rightarrow$   \> \lstinline{\rightarrow} \\
+        $\Leftarrow$    \> \lstinline{\Leftarrow} \\
+        $\Rightarrow$   \> \lstinline{\Rightarrow} \\
+        $\infty$        \> \lstinline{\infty} \\
+        $\forall$       \> \lstinline{\forall} \\
+        $\Re$           \> \lstinline{\Re} \\
+        $\Im$           \> \lstinline{\Im} \\
+        $\nabla$        \> \lstinline{\nabla} \\
+        $\exists$       \> \lstinline{\exists} \\
+        $\nexists$      \> \lstinline{\nexists} \\
+        $\partial$      \> \lstinline{\partial} \\
+        $\triangle$     \> \lstinline{\triangle} \\
+        $\blacksquare$  \> \lstinline{\blacksquare} \\
+        $\times$        \> \lstinline{\times} \\
+        $\cdot$         \> \lstinline{\cdot} \\
+        $\leq$          \> \lstinline{\leq} \\
+        $\geq$          \> \lstinline{\geq} \\
+        $\in$           \> \lstinline{\in} \\
+        $\notin$        \> \lstinline{\notin} \\
+        $\vee$          \> \lstinline{\vee} \\
+    \end{tighttabbing}
 
 \end{multicols*}
 \subsection*{Fonctions importantes}
-\begin{tabular}{%
-  p{0.5cm}p{1.5cm}%
-  p{0.5cm}p{1.5cm}%
-  p{0.5cm}p{1.5cm}}
-	$\sum$ & \code?\sum? & $\prod$ & \code?\prod? & $\int$ & \code?\int?\\
-	$\int$ & \code?\int? & $\iint$ & \code?\iint? & $\iiint$ & \code?\iiint? \\ $\oint$ & \code?\oint? & $\vec a$ & \code?\vec a? & $\dot a$ & \code?\dot a? \\
-  $\ddot a$ & \code?\ddot a? & $\hat a$ & \code?\hat a? \\
-	\end{tabular}
+\begin{multicols*}{4}
+\begin{tighttabbing}
+    aaa \= a \kill
+    $\sum$    \> \code?\sum?    \\
+    $\prod$  \> \code?\prod?  \\
+    $\int$   \> \code?\int?   \\
+    $\int$    \> \code?\int?    \\
+    $\iint$  \> \code?\iint?  \\
+    $\iiint$ \> \code?\iiint? \\
+    $\oint$ \> \code?\oint? \\
+    $\vec a$ \> \code?\vec a? \\
+    $\dot a$ \> \code?\dot a? \\
+    $\ddot a$ \> \code?\ddot a? \\
+    $\hat a$ \> \code?\hat a?  \\
+\end{tighttabbing}
+\end{multicols*}
 
 \subsection*{Fonctions usuelles}
-\begin{tabular}{llllll}
-	\code?\sin? & \code?\sinh? & \code?\arcsin? & \code?\csc? & \code?\ln? & \code?\min? \\
-	\code?\cos? & \code?\cosh? & \code?\arccos? & \code?\sec? & \code?\lg? & \code?\max? \\
-	\code?\tan? & \code?\tanh? & \code?\arctan? & \code?\cot? & \code?\log? & \code?\lim? \\
-	\code?\exp? & \code?\det? & \code?\tr? & \code?\dim? & \code?\ker? & \code?\Pr? \\
-\end{tabular}
+\begin{multicols*}{3}
+\begin{tighttabbing}
+    aaaaaa \= a \kill
+    \code?\sin? \> Sinus \\
+    \code?\sinh? \> Sinus hyp. \\
+    \code?\arcsin? \> Arcsinus \\
+    \code?\csc? \> Cosécante \\
+    \code?\ln? \> Logarithme népérien \\
+    \code?\min? \> Minimum \\
+    \code?\cos? \> Cosinus \\
+    \code?\cosh? \> Cosinus hyp. \\
+    \code?\arccos? \> Arccosinus \\
+    \code?\sec? \> Sécante \\
+    \code?\lg? \> Logarithme décimal \\
+    \code?\max? \> Maximum \\
+    \code?\tan? \> Tangente \\
+    \code?\tanh? \> Tangente hyp. \\
+    \code?\arctan? \> Arctangente \\
+    \code?\cot? \> Cotangente \\
+    \code?\log? \> Log. en base $n$ \\
+    \code?\lim? \> Limite \\
+    \code?\exp? \> Exponentielle \\
+    \code?\det?  \> Déterminant \\
+    \code?\tr?  \> Trace \\
+    \code?\dim? \> Dimension \\
+    \code?\ker? \> Noyau \\
+    \code?\Pr?  \> Probabilité
+\end{tighttabbing}
+\end{multicols*}
 
 \subsection*{Parenthèses et délimiteurs}
 Utiliser \code+\left+ (\code+\right+) pour ajuster la hauteur des parenthèses à l'expression.
 \begin{tabular}{p{0.5cm}p{2cm}p{0.5cm}p{2cm}p{0.5cm}p{2cm}}
-  $(.)$ & \code+(.)+ & $[.]$ & \code+[.]+ & $\{.\}$ & \code+\{.\}+ \\
-  $\langle.\rangle$ & \code+\langle.\rangle+ & $\lbrace.\rbrace$ & \code!\lbrace.\rbrace! & $\lvert.\rvert$ & \code!\lvert.\rvert! \\
-  $\lbrack.\rbrack$ & \code!\lbrack.\rbrack! & $\lceil.\rceil$ & \code!\lceil.\rceil! & $\lfloor.\rfloor$ & \code!\lfloor.\rfloor! \\
-
+    $(.)$             & \code+(.)+             & $[.]$             & \code+[.]+             & $\{.\}$           & \code+\{.\}+           \\
+    $\langle.\rangle$ & \code+\langle.\rangle+ & $\lbrace.\rbrace$ & \code!\lbrace.\rbrace! & $\lvert.\rvert$   & \code!\lvert.\rvert!   \\
+    $\lbrack.\rbrack$ & \code!\lbrack.\rbrack! & $\lceil.\rceil$   & \code!\lceil.\rceil!   & $\lfloor.\rfloor$ & \code!\lfloor.\rfloor! \\
 \end{tabular}
 \subsection*{Élements d'équations}
 
+\begin{multicols*}{2}
+\begin{tighttabbing}
+    aaaaaa \= a \kill
+    $x^y$                                             \> \code+$x^y$+                                             \\
+    $x_y$                                             \> \code+$x_y$+                                             \\
+    $x^{y+z}$                                         \> \code!$x^{y+z}$!                                         \\
+    $\frac{x}{y}$                                     \> \code!$\frac{x}{y}$!                                     \\
+    $\sqrt{x}$                                        \> \code+$\sqrt{x}$+                                        \\
+    $\sqrt[n]{x}$                                     \> \code+$\sqrt[n]{x}$+                                     \\
+    $x\cdot y$                                        \> \code+$x\cdot y$+                                        \\
+    $\sum_{j=0}^n j^2$                                \> \code+$\sum_{j=0}^n j^2$+
+\end{tighttabbing}
+\end{multicols*}
+
 \begin{tabular}{p{2cm}l}
-  $x^y$ &  \code+$x^y$+ \\
-  $x_y$ &  \code+$x_y$+ \\
-  $x^{y+z}$ &  \code!$x^{y+z}$! \\
-  $\frac{x}{y}$ & \code!$\frac{x}{y}$! \\
-  $\sqrt{x}$ & \code+$\sqrt{x}$+ \\
-  $\sqrt[n]{x}$ & \code+$\sqrt[n]{x}$+ \\
-  $\left(a + \frac{1}{2} \right)^2$ & \code!$\left( a + \frac{1}{2} \right)^2$!
-  \\
-  $x\cdot y$ & \code+$x\cdot y$+ \\
-  $\sum_{j=0}^n j^2$ & \code+$\sum_{j=0}^n j^2$+ \\
-  $\int_{x=0}^{\infty} \mathrm{e}^{-x} \mathrm{d}x$ & \code+$\int_{x=0}^{\infty} \mathrm{e}^{-x} \mathrm{d}x$+ \\
-  $\left\langle i,2^{2^i}\right\rangle$ & \code+$\left\langle i,2^{2^i}\right\rangle$+ \\
-  $\nabla=\boldsymbol{i}\frac{d}{dx}+...$ & \code!$\nabla=\boldsymbol{i}\frac{d}{dx}+...$! \\
-  $\lim_{h\to 0}\frac{f(x+h-f(x)}{h}$ & \code!$\lim_{h\to 0}\frac{f(x+h-f(x)}{h}$! \\
-  $f\colon\mathbb{R}\to\mathbb{R}$ & \code+$f\colon\mathbb{R}\to\mathbb{R}$+ \\
+
+    $\left(a + \frac{1}{2} \right)^2$                 & \code!$\left( a + \frac{1}{2} \right)^2$!                \\
+    $\int_{x=0}^{\infty} \mathrm{e}^{-x} \mathrm{d}x$ & \code+$\int_{x=0}^{\infty} \mathrm{e}^{-x} \mathrm{d}x$+ \\
+    $\left\langle i,2^{2^i}\right\rangle$             & \code+$\left\langle i,2^{2^i}\right\rangle$+             \\
+    $\nabla=\boldsymbol{i}\frac{d}{dx}+...$           & \code!$\nabla=\boldsymbol{i}\frac{d}{dx}+...$!           \\
+    $\lim_{h\to 0}\frac{f(x+h-f(x)}{h}$               & \code!$\lim_{h\to 0}\frac{f(x+h-f(x)}{h}$!               \\
+    $f\colon\mathbb{R}\to\mathbb{R}$                  & \code+$f\colon\mathbb{R}\to\mathbb{R}$+                  \\
 \end{tabular}
 
 \subsection*{Système d'équation}
 
 \begin{multicols*}{2}
-\[
-  f_n = \begin{cases}
-    a & \text{if $n=0$} \\
-    r\cdot f_{n-1} &\text{else}
-  \end{cases}
-\]
-\columnbreak
-\begin{latexcode}
-f_n = \begin{cases}
-  a & \text{if $n=0$} \\
-  r\cdot f_{n-1} &\text{else}
-\end{cases}
-\end{latexcode}
+    \[
+        f_n = \begin{cases}
+            a              & \text{if $n=0$} \\
+            r\cdot f_{n-1} & \text{else}
+        \end{cases}
+    \]
+    \columnbreak
+    \begin{latexcode}
+        f_n = \begin{cases}
+            a              & \text{if $n=0$} \\
+            r\cdot f_{n-1} & \text{else}
+        \end{cases}
+    \end{latexcode}
 \end{multicols*}
 
 \begin{multicols*}{2}
-  \[
-    \begin{pmatrix}
-      a & b \\
-      c & d
-    \end{pmatrix}
-  \]
-  \columnbreak
-  \begin{latexcode}
-\begin{pmatrix}
-  a & b \\
-  c & d
-\end{pmatrix}
-  \end{latexcode}
-  \end{multicols*}
+    \[
+        \begin{pmatrix}
+            a & b \\
+            c & d
+        \end{pmatrix}
+    \]
+    \columnbreak
+    \begin{latexcode}
+        \begin{pmatrix}
+            a & b \\
+            c & d
+        \end{pmatrix}
+    \end{latexcode}
+\end{multicols*}
 
 \section*{Figures}
 
-\begin{tabular}{p{1.5cm}l}
-h & Placer la figure approximativement ici \\
-t & Placer la figure au début de la page \\
-b & Placer la figure à la fin de la page \\
-p & Placer la figure sur une page à part \\
-! & Surcharge la position par défaut \\
-H & Force la figure à être placée ici \\
-\end{tabular}
+\begin{multicols*}{2}
+\begin{tighttabbing}
+    aa \= a \kill
+    h \> Placer la fig. approx. ici \\
+    t \> Placer la fig. au début de la page   \\
+    b \> Placer la fig. à la fin de la page   \\
+    p \> Placer la fig. sur une page à part   \\
+    ! \> Surcharge la position par défaut       \\
+    H \> Force la fig. à être placée ici      \\
+\end{tighttabbing}
+\end{multicols*}
 
 \begin{latexcode}
-\graphicspath{ {images/} } % Chemin des images
-\includegraphics[scale=1.5]{logo} % Inclure une image
-\includegraphics[width=\textwidth]{logo} % Inclure une image
+    \graphicspath{ {images/} } % Chemin des images
+    \includegraphics[scale=1.5]{logo} % Inclure une image
+    \includegraphics[width=\textwidth]{logo} % Inclure une image
 
-\begin{wrapfigure}{r}{0.25\textwidth}
-  \centering
-  \includegraphics[width=0.25\textwidth]{image}
-\end{wrapfigure} % Image encapsulée dans le texte
+    \begin{wrapfigure}{r}{0.25\textwidth}
+        \centering
+        \includegraphics[width=0.25\textwidth]{image}
+    \end{wrapfigure} % Image encapsulée dans le texte
 
-% Sous-figures avec subcaption
-\begin{figure}[H]
-  \centering
-  \begin{subfigure}{0.45\textwidth}
-    \includegraphics[width=\textwidth]{image1}
-    \caption{Première image}
-  \end{subfigure}
-  \begin{subfigure}{0.45\textwidth}
-    \includegraphics[width=\textwidth]{image2}
-    \caption{Seconde image}
-  \end{subfigure}
-  \caption{Deux images côte à côte}
-\end{figure}
+    % Sous-figures avec subcaption
+    \begin{figure}[H]
+        \centering
+        \begin{subfigure}{0.45\textwidth}
+            \includegraphics[width=\textwidth]{image1}
+            \caption{Première image}
+        \end{subfigure}
+        \begin{subfigure}{0.45\textwidth}
+            \includegraphics[width=\textwidth]{image2}
+            \caption{Seconde image}
+        \end{subfigure}
+        \caption{Deux images côte à côte}
+    \end{figure}
 \end{latexcode}
 \begin{multicols*}{2}
 
-\begin{latexcode}
-\begin{figure}[H]
-  \centering
-  \includegraphics[width=3cm]{example-image-duck}
-  \caption[Canard]{Un canard}
-  \label{fig:right-triangle}
-\end{figure}
-\end{latexcode}
+    \begin{latexcode}
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=2cm]{img}
+            \caption[Canard]{Un canard}
+            \label{fig:right-triangle}
+        \end{figure}
+    \end{latexcode}
 
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=3cm]{example-image-duck}
-    \caption[Canard]{Un canard}
-    \label{fig:right-triangle}
-\end{figure}
+    \begin{figure}[H]
+        \centering
+        \includegraphics[width=2cm]{example-image-duck}
+        \caption[Canard]{Un canard}
+        \label{fig:right-triangle}
+    \end{figure}
 
 \end{multicols*}
 
 \section*{Table}
 \subsection*{Tableau simple avec légende}
 \begin{minipage}[c]{0.7\linewidth}
-\begin{latexcode}
-\begin{table}[H] \centering
-\caption{Description \label{tb:tab1}}
-\begin{tabular}{c|lr} \toprule
-Id & Nom & Prénom \\ \midrule
-1 & Dantès & Edmond \\
-2 & Herrera & Mercédès \\ \bottomrule
-\end{tabular} \end{table}
-\end{latexcode}
+    \begin{latexcode}
+        \begin{table}[H] \centering
+            \caption{Description \label{tb:tab1}}
+            \begin{tabular}{c|lr} \toprule
+                Id & Nom     & Prénom   \\ \midrule
+                1  & Dantès  & Edmond   \\
+                2  & Herrera & Mercédès \\ \bottomrule
+            \end{tabular} \end{table}
+    \end{latexcode}
 \end{minipage}
 \begin{minipage}[c]{0.3\linewidth}
-\begin{table}[H]
-  \centering
-  \caption{Description}
-  \begin{tabular}{c|lr}
-  \toprule
-  Id &  Nom & Prénom \\
-  \midrule
-  1 & Dantès & Edmond \\
-  2 & Herrera & Mercédès \\
-  \bottomrule
-  \end{tabular}
-\end{table}
+    \begin{table}[H]
+        \centering
+        \caption{Description}
+        \begin{tabular}{c|lr}
+            \toprule
+            Id & Nom     & Prénom   \\
+            \midrule
+            1  & Dantès  & Edmond   \\
+            2  & Herrera & Mercédès \\
+            \bottomrule
+        \end{tabular}
+    \end{table}
 \end{minipage}
 
 \subsection*{Tableau pleine largeur avec colonne variable}
 \begin{multicols*}{2}
-\begin{latexcode}
-\begin{tabularx}{\textwidth}
-{|c|l|X|} \hline
-U & X & Y \\ \hline
-1 & a & b \\ \hline
-2 & c & d \\ \hline
-3 & e & f \\ \hline
-\end{tabularx}
-\end{latexcode}
-\columnbreak
-\null \vskip 0.5em
-\begin{tabularx}{\columnwidth}{|c|l|X|}
-  \hline
-  U & X & Y \\ \hline
-  1 & a & b \\
-  2 & c & d \\
-  3 & e & f \\ \hline
-\end{tabularx}
+    \begin{latexcode}
+        \begin{tabularx}{\textwidth}
+            {|c|l|X|} \hline
+            U & X & Y \\ \hline
+            1 & a & b \\ \hline
+            2 & c & d \\ \hline
+            3 & e & f \\ \hline
+        \end{tabularx}
+    \end{latexcode}
+    \columnbreak
+    \null \vskip 0.5em
+    \begin{tabularx}{\columnwidth}{|c|l|X|}
+        \hline
+        U & X & Y \\ \hline
+        1 & a & b \\
+        2 & c & d \\
+        3 & e & f \\ \hline
+    \end{tabularx}
 \end{multicols*}
 
 \subsection*{Tableau pleine largeur réparti}
 \begin{multicols*}{2}
-\begin{latexcode}
-\begin{tabularx}{\textwidth}
-{p{5mm}|*4{>{}X|}}
-1 & a & bb & ccc & dddd \\
-2 & e & ff & ggg & hhhh \\
-\end{tabularx}
-\end{latexcode}
-\columnbreak
-\null \vskip 0.5em
-\begin{tabularx}{\columnwidth}{p{5mm}|*4{>{}X|}}
-  1 & a & bb & ccc & dddd \\
-  2 & e & ff & ggg & hhhh \\
-\end{tabularx}
+    \begin{latexcode}
+        \begin{tabularx}{\textwidth}
+            {p{5mm}|*4{>{}X|}}
+            1 & a & bb & ccc & dddd \\
+            2 & e & ff & ggg & hhhh \\
+        \end{tabularx}
+    \end{latexcode}
+    \columnbreak
+    \null \vskip 0.5em
+    \begin{tabularx}{\columnwidth}{p{5mm}|*4{>{}X|}}
+        1 & a & bb & ccc & dddd \\
+        2 & e & ff & ggg & hhhh \\
+    \end{tabularx}
 \end{multicols*}
 
 \section*{Unités}
 Mode d'affichage configurable avec \code+\sisetup{per-mode=reciprocal}+ ou \code+\sisetup{per-mode=fraction}+. Les préfix d'unités tels que : \code+\kilo+, \code+\mega+, \code+\giga+\dots, peuvent être utilisés devant chaque unité.
 
 \begin{tabular}{p{2cm}l}
-  \num{7.123456e12} & \code+\num{7.123456e12}+ \\
- $[g] = \si{\meter\per\second\squared}$ & \code!$[g] = \si{\meter\per\second\squared}$!\\
-  $E = \SI[per-mode=fraction]{3.7}{\volt\per\milli\meter}$ & \code!E = \SI{3.7}{\volt\per\milli\meter}!\\
- $E = \SI[per-mode=reciprocal]{3.7}{\volt\per\milli\meter}$ & \code!E = \SI[per-mode=reciprocal]{3.7}{\volt\per\milli\meter}!\\[1em]
+    \num{7.123456e12}                                          & \code+\num{7.123456e12}+                                        \\
+    $[g] = \si{\meter\per\second\squared}$                     & \code!$[g] = \si{\meter\per\second\squared}$!                   \\
+    $E = \SI[per-mode=fraction]{3.7}{\volt\per\milli\meter}$   & \code!E = \SI{3.7}{\volt\per\milli\meter}!                      \\
+    $E = \SI[per-mode=reciprocal]{3.7}{\volt\per\milli\meter}$ & \code!E = \SI[per-mode=reciprocal]{3.7}{\volt\per\milli\meter}! \\[1em]
 \end{tabular}
 
 \section*{Couleurs}
 Par défaut le package \emph{xcolor} supporte 68 couleurs standards (\textcolor{Apricot}{Apricot}, \textcolor{Bittersweet}{Bittersweet}, \textcolor{Rhodamine}{Rhodamine}, \textcolor{SpringGreen}{SpringGreen}, \dots). D'autres peuvent être définies par l'utilisateur.\par
 \begin{latexcode}
-\usepackage{xcolor}
-\definecolor{Cornflower Blue}{RGB}{97, 149, 237}
-\definecolor{RAL2000}{HTML}{da6e00}
-\colorlet{corn}{Cornflower Blue}
-\colorlet{heig}{RAL2000}
-\end{latexcode}
-
-\begin{tabularx}{\columnwidth}{lX}
-  \textcolor{red}{rouge} & \verb+\textcolor{red}{rouge}+ \\
-  \textcolor{corn}{Cornflower Blue} & \verb+\textcolor{corn}{Cornflower Blue}+ \\
-  \textcolor{JungleGreen}{JungleGreen} & \verb+\textcolor{JungleGreen}{JungleGreen}+ \\
-  \textcolor{heig}{HEIG-VD} & \verb+\textcolor{heig}{HEIG-VD}+ \\
-
-\end{tabularx}
-
-\section*{Mise en page}
-Options de \emph{geometry}: \emph{a4paper}, \emph{a4paper, landscape}, \emph{a4paper, tight}, \emph{twocolumn}\dots
-\begin{latexcode}
-\usepackage[options]{geometry}
-\usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
-\usepackage[a4paper,landscape,tight,twocolumn]{geometry}
-
+    \usepackage{xcolor}
+    \definecolor{Cornflower Blue}{RGB}{97, 149, 237}
+    \definecolor{RAL2000}{HTML}{da6e00}
+    \colorlet{corn}{Cornflower Blue}
+    \colorlet{heig}{RAL2000}
 \end{latexcode}
 
 \begin{multicols*}{2}
-%\includegraphics[height=6cm]{assets/layout.pdf}
-\columnbreak
-\begin{enumerate}[label=\protect\circled{\arabic*}]
-  \item 1in + \code?\hoffset?
-  \item 1in + \code?\voffset?
-  \item \code?\oddsidemargin?
-  \item \code?\topmargin?
-  \item \code?\headheight?
-  \item \code?\headsep?
-  \item \code?\textheight?
-  \item \code?\textwidth?
-  \item \code?\marginparwidth?
-  \item \code?\marginparwidth?
-  \item \code?\footskip?
-  \end{enumerate}
-
+\begin{tabbing}
+    aaaaaaaaa \= a \kill
+    \textcolor{red}{texte}               \> \code!\textcolor{red}{texte}!              \\
+    \textcolor{corn}{texte}    \> \code!\textcolor{corn}{texte}!    \\
+    \textcolor{JungleGreen}{texte} \> \code!\textcolor{JungleGreen}{texte}! \\
+    \textcolor{heig}{texte}            \> \code!\textcolor{heig}{texte}!            \\
+    \textcolor{blue}{texte}              \> \code!\textcolor{blue}{texte}!             \\
+    \colorbox{yellow}{texte}            \> \code!\colorbox{yellow}{texte}!            \\
+    \fcolorbox{red}{yellow}{texte}      \> \code!\fcolorbox{red}{yellow}{texte}!
+\end{tabbing}
 \end{multicols*}
+
+% \section*{Mise en page}
+% Options de \emph{geometry}: \emph{a4paper}, \emph{a4paper, landscape}, \emph{a4paper, tight}, \emph{twocolumn}\dots
+% \begin{latexcode}
+%     \usepackage[options]{geometry}
+%     \usepackage[left=2cm,right=2cm,top=2cm,bottom=2cm]{geometry}
+%     \usepackage[a4paper,landscape,tight,twocolumn]{geometry}
+
+% \end{latexcode}
+
+% \begin{multicols*}{2}
+%     %\includegraphics[height=6cm]{assets/layout.pdf}
+%     \columnbreak
+%     \begin{enumerate}[label=\protect\circled{\arabic*}]
+%         \item 1in + \code?\hoffset?
+%         \item 1in + \code?\voffset?
+%         \item \code?\oddsidemargin?
+%         \item \code?\topmargin?
+%         \item \code?\headheight?
+%         \item \code?\headsep?
+%         \item \code?\textheight?
+%         \item \code?\textwidth?
+%         \item \code?\marginparwidth?
+%         \item \code?\marginparwidth?
+%         \item \code?\footskip?
+%     \end{enumerate}
+
+% \end{multicols*}
 
 
 % \section*{Tiks}
@@ -816,108 +891,104 @@ Options de \emph{geometry}: \emph{a4paper}, \emph{a4paper, landscape}, \emph{a4p
 
 \section*{Compteurs}
 \begin{latexcode}
-\setlength{parameters}{length}
-\usecounter{counter name}
-\newcounter{counter name}
+    \setlength{parameters}{length}
+    \usecounter{counter name}
+    \newcounter{counter name}
 \end{latexcode}
 
 \section*{Bibliographie}
 \begin{latexcode}
-% Avec bibtex (traditionnel)
-\bibliographystyle{plain} % plain, alpha, unsrt, abbrv
-\bibliography{references} % fichier references.bib
+    % Avec bibtex (traditionnel)
+    \bibliographystyle{plain} % plain, alpha, unsrt, abbrv
+    \bibliography{references} % fichier references.bib
 
-% Avec biblatex (moderne)
-\usepackage[style=numeric,backend=biber]{biblatex}
-\addbibresource{references.bib}
-\cite{key}           % Citation simple
-\citep{key}          % Citation entre parenthèses  
-\citet{key}          % Citation textuelle
-\nocite{*}           % Citer toutes les références
-\printbibliography   % Afficher la bibliographie
+    % Avec biblatex (moderne)
+    \usepackage[style=numeric,backend=biber]{biblatex}
+    \addbibresource{references.bib}
+    \cite{key}           % Citation simple
+    \citep{key}          % Citation entre parenthèses
+    \citet{key}          % Citation textuelle
+    \nocite{*}           % Citer toutes les références
+    \printbibliography   % Afficher la bibliographie
 \end{latexcode}
 
 \section*{Index et glossaire}
 \begin{latexcode}
-% Index
-\usepackage{makeidx}
-\makeindex
-\index{terme}        % Ajouter un terme à l'index
-\index{terme!sous-terme} % Sous-entrée
-\printindex          % Afficher l'index
+    % Index
+    \usepackage{makeidx}
+    \makeindex
+    \index{terme}        % Ajouter un terme à l'index
+    \index{terme!sous-terme} % Sous-entrée
+    \printindex          % Afficher l'index
 
-% Glossaire
-\usepackage{glossaries}
-\makeglossaries
-\newglossaryentry{latex}{name=LaTeX,description={Document preparation system}}
-\gls{latex}          % Utiliser un terme du glossaire  
-\printglossaries     % Afficher le glossaire
+    % Glossaire
+    \usepackage{glossaries}
+    \makeglossaries
+    \newglossaryentry{latex}{name=LaTeX,description={Document preparation system}}
+    \gls{latex}          % Utiliser un terme du glossaire
+    \printglossaries     % Afficher le glossaire
 \end{latexcode}
 
 \section*{Code source}
 Deux paquets : \emph{listings} ou \emph{minted}.
+\begin{multicols*}{2}
 \begin{latexcode}
 \usepackage{listings}
 \lstset{
-  backgroundcolor=\color{FloralWhite},
-  basicstyle=\ttfamily\footnotesize, tabsize=2,
-  language={C++},
-  aboveskip={0.4\baselineskip},belowskip={0.4\baselineskip},
-  abovecaptionskip={\baselineskip},
-  belowcaptionskip={0\baselineskip},
-  extendedchars=true, breaklines=true,
-  showtabs=false, showspaces=false, showstringspaces=false,
-  identifierstyle=\ttfamily, keywordstyle=\color{blue},
-  commentstyle=\color{green},
-  stringstyle=\color[rgb]{0.8,  0.1,  0.1},
-}
-\lstinputlisting{code.cpp} % Inclut un fichier
-\begin{lstlisting}[language=C++,caption=Mon code]
+  backgroundcolor=\color{Red},
+  basicstyle=\ttfamily\small,
+  tabsize=2,
+  language={C++}}
+\lstinputlisting{code.cpp}
+\begin{lstlisting}[
+    language=C++,caption=Mon code]
 int main() { return 0; }
 \end{lstlisting}
-
-% Avec minted (nécessite --shell-escape)
-\usepackage{minted}
+\end{latexcode}
+\columnbreak
+\begin{latexcode}
+\usepackage{minted} % --shell-escape
 \begin{listing}[h]
-  \inputminted{python}{assets/code.py}
-  \caption{Description \label{py:code}}
+  \inputminted{python}{code.py}
+  \caption{Blabla \label{py:code}}
 \end{listing}
 \end{latexcode}
+\end{multicols*}
 
-\section*{Erreurs courantes et débogage}
-\begin{tabular}{p{2.8cm}l}
-\texttt{! Missing \$ inserted} & Mode math requis: utiliser \$\dots\$ \\
-\texttt{! Undefined control sequence} & Commande inconnue ou package manquant \\
-\texttt{! LaTeX Error: File not found} & Fichier d'image ou package introuvable \\
-\texttt{! Package babel Error} & Problème d'encodage: utiliser UTF-8 \\
-\texttt{! Extra alignment tab} & Trop de colonnes dans le tableau \\
-\texttt{! Missing \} inserted} & Accolade fermante manquante \\
-\texttt{Overfull \\hbox} & Ligne trop longue, couper le mot \\
-\texttt{! LaTeX Error: \\begin\{...\} ended by \\end\{...\}} & Environnements non appariés \\
-\end{tabular}
+% \section*{Erreurs courantes et débogage}
+% \begin{tabular}{p{2.8cm}l}
+% \texttt{! Missing \$ inserted} & Mode math requis: utiliser \$\dots\$ \\
+% \texttt{! Undefined control sequence} & Commande inconnue ou package manquant \\
+% \texttt{! LaTeX Error: File not found} & Fichier d'image ou package introuvable \\
+% \texttt{! Package babel Error} & Problème d'encodage: utiliser UTF-8 \\
+% \texttt{! Extra alignment tab} & Trop de colonnes dans le tableau \\
+% \texttt{! Missing \} inserted} & Accolade fermante manquante \\
+% \texttt{Overfull \\hbox} & Ligne trop longue, couper le mot \\
+% \texttt{! LaTeX Error: \\begin\{...\} ended by \\end\{...\}} & Environnements non appariés \\
+% \end{tabular}
 
-\begin{latexcode}
-% Quelques astuces de débogage :
-\listfiles              % Liste les packages utilisés
-\fbox{texte}           % Encadrer pour voir les dimensions
-% Compilation en deux passes pour les références
-% Vider le cache : rm *.aux *.log *.toc *.lof *.lot
+% \begin{latexcode}
+%     % Quelques astuces de débogage :
+%     \listfiles              % Liste les packages utilisés
+%     \fbox{texte}           % Encadrer pour voir les dimensions
+%     % Compilation en deux passes pour les références
+%     % Vider le cache : rm *.aux *.log *.toc *.lof *.lot
 
-% Compilation typique :
-% pdflatex document.tex    (1ère passe)
-% bibtex document          (si bibliographie)
-% pdflatex document.tex    (2ème passe pour références)
-% pdflatex document.tex    (3ème passe pour finir)
+%     % Compilation typique :
+%     % pdflatex document.tex    (1ère passe)
+%     % bibtex document          (si bibliographie)
+%     % pdflatex document.tex    (2ème passe pour références)
+%     % pdflatex document.tex    (3ème passe pour finir)
 
-% Ou avec latexmk (automatique) :
-% latexmk -pdf document.tex
-\end{latexcode}
+%     % Ou avec latexmk (automatique) :
+%     % latexmk -pdf document.tex
+% \end{latexcode}
 
 \section*{Références}
 \begin{tabular}{p{1.8cm}p{2.2cm}p{2cm}l}
-\code!\cite{key}! & Cite une référence & \code!\label{marker}! & Définit un label \\
-\code!\ref{marker}! & Référence à un label & \code!\pageref{marker}! & Référence à une page \\
-\code!\footnote{text}! & Note de bas de page & \code!\url{heig-vd.ch}! & Hyperlien \\
+    \code!\cite{key}!      & Cite une référence   & \code!\label{marker}!   & Définit un label     \\
+    \code!\ref{marker}!    & Référence à un label & \code!\pageref{marker}! & Référence à une page \\
+    \code!\footnote{text}! & Note de bas de page  & \code!\url{heig-vd.ch}! & Hyperlien            \\
 \end{tabular}
 \end{multicols*}
 
