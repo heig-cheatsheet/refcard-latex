@@ -17,13 +17,12 @@
 \usepackage{titlesec}
 \usepackage{fancyvrb,cprotect}
 \usepackage{graphicx}
-\usepackage{fontspec}
+\usepackage{wrapfig}
 \usepackage{booktabs}
 \usepackage{amsmath}
 \usepackage{accents}
 \usepackage{amssymb}
 \usepackage{esint}
-\usepackage{fancyvrb}
 \usepackage{tikz}
 \usepackage{enumitem}
 \usepackage{vwcol}
@@ -118,7 +117,7 @@ Cette carte de référence est destinée aux étudiants utilisant \LaTeX2e pour 
 }
 
 \section*{Classes de document}
-Vous pouvez également include votre propre classe définie dans un fichier \code{.cls}.
+Vous pouvez également inclure votre propre classe définie dans un fichier \code{.cls}.
 \begin{latexcode}
 \documentclass[11pt,a4paper,landscape,twoside]{article}
 \documentclass{report} % Dispose de \chapter
@@ -147,6 +146,9 @@ Vous pouvez également include votre propre classe définie dans un fichier \cod
 \usepackage{babel}    % Conventions linguistiques
 \usepackage{siunitx}  % Présentation des unités physiques
 \usepackage{tikz}     % Dessin vectoriel dans LaTeX
+\usepackage{wrapfig}  % Figures avec habillage de texte
+\usepackage{subcaption} % Sous-figures et sous-tables
+\usepackage{multicol} % Colonnes multiples
 
 \end{latexcode}
 
@@ -171,6 +173,22 @@ Vous pouvez également include votre propre classe définie dans un fichier \cod
 Comme vu au paragraphe \ref{subsec:foobar}
 \end{latexcode}
 
+\section*{Commandes pratiques}
+\begin{tabular}{*2{>{}l}}
+\code!\today! & Date du jour \\
+\code!\LaTeX! & Logo \LaTeX \\
+\code!\TeX! & Logo \TeX \\
+\code!\newpage! & Nouvelle page \\
+\code!\clearpage! & Nouvelle page + vider les flottants \\
+\code!\pagebreak! & Saut de page \\
+\code!\linebreak! & Saut de ligne \\
+\code!\noindent! & Pas d'indentation \\
+\code!\phantom{texte}! & Espace invisible de la taille du texte \\
+\code!\hphantom{texte}! & Espace horizontal invisible \\
+\code!\vphantom{texte}! & Espace vertical invisible \\
+\code!\protect! & Protéger une commande fragile \\
+\end{tabular}
+
 \section*{Polices et styles}
 \subsection*{Format de police}
 \begin{tabularx}{\columnwidth}{lX}
@@ -186,7 +204,7 @@ Comme vu au paragraphe \ref{subsec:foobar}
 \subsection*{Taille de polices}
 \begin{multicols*}{2}
   \begin{tabularx}{\columnwidth}{lX}
-    \lstinline{\\tiny\{footnotesize\}} & \tiny{Tiny} \\
+    \lstinline{\\tiny\{Tiny\}} & \tiny{Tiny} \\
     \lstinline{\\scriptsize\{Script\}} & \scriptsize{Script} \\
     \lstinline{\\footnotesize\{Footnote\}} & \footnotesize{Footnote} \\
     \lstinline{\\small\{Small\}} & \small{Small} \\
@@ -274,6 +292,17 @@ $\clubsuit$ & \code+$\clubsuit$+ & $\spadesuit$ & \code+$\spadesuit$+ \\
 \code!\hfil! & Remplissage horizontal automatique \\
 \code!\vfill! & Remplissage vertical jusqu'au bas de page \\
 \code!\hfill! & Remplissage horizontal jusqu'au bord de page \\
+\end{tabular}
+
+\subsection*{Environnements importants}
+\begin{tabular}{*2{>{}l}}
+\code!\begin{quote}! & Citation courte \\
+\code!\begin{quotation}! & Citation longue avec alinéas \\
+\code!\begin{verse}! & Poésie, vers \\
+\code!\begin{abstract}! & Résumé \\
+\code!\begin{appendix}! & Section annexe \\
+\code!\begin{verbatim}! & Texte littéral (sans interprétation) \\
+\code!\begin{minipage}{width}! & Page réduite dans la page \\
 \end{tabular}
 
 \section*{Unités internes et longueurs}
@@ -420,12 +449,11 @@ Ou alignées :\par
 	\end{tabular}
 
 \subsection*{Fonctions usuelles}
-\begin{tabular}{llllllllllll}
-	\code?\sin? & \code?\sinh? & \code?\arcsin? & \code?\csc? & \code?\ln? & \code?\min? \code?\cos? & \code?\cosh? & \code?\arccos? & \code?\sec? &
-  \code?\lg? & \code?\max? \\
-
-	\code?\tan? & \code?\tanh? & \code?\arctan? & \code?\cot? & \code?\log? & \code?\lim? \code?\exp? & \code?\det? & \code?\tr? & \code?\dim? &
-  \code?\ker? & \code?\Pr? \\
+\begin{tabular}{llllll}
+	\code?\sin? & \code?\sinh? & \code?\arcsin? & \code?\csc? & \code?\ln? & \code?\min? \\
+	\code?\cos? & \code?\cosh? & \code?\arccos? & \code?\sec? & \code?\lg? & \code?\max? \\
+	\code?\tan? & \code?\tanh? & \code?\arctan? & \code?\cot? & \code?\log? & \code?\lim? \\
+	\code?\exp? & \code?\det? & \code?\tr? & \code?\dim? & \code?\ker? & \code?\Pr? \\
 \end{tabular}
 
 \subsection*{Parenthèses et délimiteurs}
@@ -462,14 +490,14 @@ Utiliser \code+\left+ (\code+\right+) pour ajuster la hauteur des parenthèses �
 \[
   f_n = \begin{cases}
     a & \text{if $n=0$} \\
-    r\cdot f_n{n-1} &\text{else}
+    r\cdot f_{n-1} &\text{else}
   \end{cases}
 \]
 \columnbreak
 \begin{latexcode}
 f_n = \begin{cases}
   a & \text{if $n=0$} \\
-  r\cdot f_n{n-1} &\text{else}
+  r\cdot f_{n-1} &\text{else}
 \end{cases}
 \end{latexcode}
 \end{multicols*}
@@ -502,14 +530,28 @@ H & Force la figure à être placée ici \\
 \end{tabular}
 
 \begin{latexcode}
-\code!\graphicspath{ {images/} }! % Chemin des images
+\graphicspath{ {images/} } % Chemin des images
 \includegraphics[scale=1.5]{logo} % Inclure une image
-\includegraphics[scale=\textwidth]{logo} % Inclure une image
+\includegraphics[width=\textwidth]{logo} % Inclure une image
 
 \begin{wrapfigure}{r}{0.25\textwidth}
   \centering
   \includegraphics[width=0.25\textwidth]{image}
 \end{wrapfigure} % Image encapsulée dans le texte
+
+% Sous-figures avec subcaption
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}{0.45\textwidth}
+    \includegraphics[width=\textwidth]{image1}
+    \caption{Première image}
+  \end{subfigure}
+  \begin{subfigure}{0.45\textwidth}
+    \includegraphics[width=\textwidth]{image2}
+    \caption{Seconde image}
+  \end{subfigure}
+  \caption{Deux images côte à côte}
+\end{figure}
 \end{latexcode}
 \begin{multicols*}{2}
 
@@ -751,13 +793,29 @@ Options de \emph{geometry}: \emph{a4paper}, \emph{a4paper, landscape}, \emph{a4p
 \newcounter{counter name}
 \end{latexcode}
 
-\section*{Code source}
-Deux paquets : \emph{listing} ou \emph{minted}.
+\section*{Bibliographie}
 \begin{latexcode}
-\usepackage{listing}
+% Avec bibtex (traditionnel)
+\bibliographystyle{plain} % plain, alpha, unsrt, abbrv
+\bibliography{references} % fichier references.bib
+
+% Avec biblatex (moderne)
+\usepackage[style=numeric,backend=biber]{biblatex}
+\addbibresource{references.bib}
+\cite{key}           % Citation simple
+\citep{key}          % Citation entre parenthèses  
+\citet{key}          % Citation textuelle
+\nocite{*}           % Citer toutes les références
+\printbibliography   % Afficher la bibliographie
+\end{latexcode}
+
+\section*{Code source}
+Deux paquets : \emph{listings} ou \emph{minted}.
+\begin{latexcode}
+\usepackage{listings}
 \lstset{
   backgroundcolor=\color{FloralWhite},
-  basicstyle=\tt, tabsize=2,
+  basicstyle=\ttfamily\footnotesize, tabsize=2,
   language={C++},
   aboveskip={0.4\baselineskip},belowskip={0.4\baselineskip},
   abovecaptionskip={\baselineskip},
@@ -768,13 +826,37 @@ Deux paquets : \emph{listing} ou \emph{minted}.
   commentstyle=\color{green},
   stringstyle=\color[rgb]{0.8,  0.1,  0.1},
 }
-\lstinputlisting{code.cpp} % Inclus un fichier
-\begin{latexcode}...\ end{latexcode} % Extrait de code
+\lstinputlisting{code.cpp} % Inclut un fichier
+\begin{lstlisting}[language=C++,caption=Mon code]
+int main() { return 0; }
+\end{lstlisting}
 
-\begin{listing}[h] % Extrait de code avec titre
-  \inputminted{python}{assets/code.py} % Utilise minted
+% Avec minted (nécessite --shell-escape)
+\usepackage{minted}
+\begin{listing}[h]
+  \inputminted{python}{assets/code.py}
   \caption{Description \label{py:code}}
 \end{listing}
+\end{latexcode}
+
+\section*{Erreurs courantes et débogage}
+\begin{tabular}{p{2.8cm}l}
+\texttt{! Missing \$ inserted} & Mode math requis: utiliser \$\dots\$ \\
+\texttt{! Undefined control sequence} & Commande inconnue ou package manquant \\
+\texttt{! LaTeX Error: File not found} & Fichier d'image ou package introuvable \\
+\texttt{! Package babel Error} & Problème d'encodage: utiliser UTF-8 \\
+\texttt{! Extra alignment tab} & Trop de colonnes dans le tableau \\
+\texttt{! Missing \} inserted} & Accolade fermante manquante \\
+\texttt{Overfull \\hbox} & Ligne trop longue, couper le mot \\
+\texttt{! LaTeX Error: \\begin\{...\} ended by \\end\{...\}} & Environnements non appariés \\
+\end{tabular}
+
+\begin{latexcode}
+% Quelques astuces de débogage :
+\listfiles              % Liste les packages utilisés
+\fbox{texte}           % Encadrer pour voir les dimensions
+% Compilation en deux passes pour les références
+% Vider le cache : rm *.aux *.log *.toc *.lof *.lot
 \end{latexcode}
 
 \section*{Références}
