@@ -280,6 +280,34 @@ $\ldots$ & \code+$\ldots$+ & $\widehat{oo}$ & \code+$\widehat{oo}$+ \\
 $\clubsuit$ & \code+$\clubsuit$+ & $\spadesuit$ & \code+$\spadesuit$+ \\
 \end{tabular}
 
+\subsection*{Accents français}
+\begin{tabular}{p{1.5cm}p{2cm}p{1.5cm}l}
+à & \code+\`{a}+ ou \verb+à+ & é & \code+\'{e}+ ou \verb+é+ \\
+è & \code+\`{e}+ ou \verb+è+ & ê & \code+\^{e}+ ou \verb+ê+ \\
+ë & \code+\"{e}+ ou \verb+ë+ & ç & \code+\c{c}+ ou \verb+ç+ \\
+î & \code+\^{i}+ ou \verb+î+ & ï & \code+\"{i}+ ou \verb+ï+ \\
+ô & \code+\^{o}+ ou \verb+ô+ & ù & \code+\`{u}+ ou \verb+ù+ \\
+û & \code+\^{u}+ ou \verb+û+ & ü & \code+\"{u}+ ou \verb+ü+ \\
+\end{tabular}
+
+Avec \emph{babel} français et encodage UTF-8, les accents peuvent être tapés directement.
+
+\subsection*{Espaces et typographie}
+\begin{tabular}{*2{>{}l}}
+\code!\,! ou \code!\ ! & Espace fine (avant : ; ! ?) \\
+\code!\quad! & Espace large (1 em) \\
+\code!\qquad! & Espace très large (2 em) \\
+\code!~! & Espace insécable \\
+\code!\@! & Espace normale après un point \\
+\code!\\! & Saut de ligne \\
+\code!\\*! & Saut de ligne sans saut de page \\
+\code!\-! & Césure suggérée \\
+\code!\mbox{texte}! & Empêcher la césure \\
+\code!\hyphenation{mots}! & Définition des césures \\
+\end{tabular}
+
+Règles typographiques françaises : espace fine insécable avant \code!: ; ! ?! et après les guillemets \og{} et \fg{}.
+
 
 \subsection*{Alignement et espacements}
 \begin{tabular}{*2{>{}l}}
@@ -809,6 +837,23 @@ Options de \emph{geometry}: \emph{a4paper}, \emph{a4paper, landscape}, \emph{a4p
 \printbibliography   % Afficher la bibliographie
 \end{latexcode}
 
+\section*{Index et glossaire}
+\begin{latexcode}
+% Index
+\usepackage{makeidx}
+\makeindex
+\index{terme}        % Ajouter un terme à l'index
+\index{terme!sous-terme} % Sous-entrée
+\printindex          % Afficher l'index
+
+% Glossaire
+\usepackage{glossaries}
+\makeglossaries
+\newglossaryentry{latex}{name=LaTeX,description={Document preparation system}}
+\gls{latex}          % Utiliser un terme du glossaire  
+\printglossaries     % Afficher le glossaire
+\end{latexcode}
+
 \section*{Code source}
 Deux paquets : \emph{listings} ou \emph{minted}.
 \begin{latexcode}
@@ -857,6 +902,15 @@ int main() { return 0; }
 \fbox{texte}           % Encadrer pour voir les dimensions
 % Compilation en deux passes pour les références
 % Vider le cache : rm *.aux *.log *.toc *.lof *.lot
+
+% Compilation typique :
+% pdflatex document.tex    (1ère passe)
+% bibtex document          (si bibliographie)
+% pdflatex document.tex    (2ème passe pour références)
+% pdflatex document.tex    (3ème passe pour finir)
+
+% Ou avec latexmk (automatique) :
+% latexmk -pdf document.tex
 \end{latexcode}
 
 \section*{Références}
