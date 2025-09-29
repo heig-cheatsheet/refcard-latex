@@ -6,14 +6,14 @@ Cette carte de référence est destinée à accompagner l'étudiant durant ses �
 
 ## Preview
 
-La carte de référence est une feuille A4 recto-verso supposément imprimée sur du papier 120g satiné violet :
+La carte de référence est une feuille A4 recto-verso supposément imprimée sur du papier 120g satiné orange clair :
 
 [![Preview](preview.png)](https://github.com/heig-tin-info/refcard-latex/releases/latest/download/refcard.pdf)
 
 L'impression via la reprographie de l'école peut être demandée avec la description suivante:
 
 ```
-papier: A4 120g satiné violet
+papier: A4 160g satiné orange clair
 format: recto-verso, reliure petit-côté à gauche
 ```
 
