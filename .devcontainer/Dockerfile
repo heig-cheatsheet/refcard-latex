@@ -1,6 +1,6 @@
 FROM alpine:3.20.2
 
-ARG TL_YEAR=2023
+ARG TL_YEAR=2024
 ARG TL_SCHEME="scheme-minimal"
 
 ARG TL_MIRROR="http://ftp.math.utah.edu/pub/tex/historic/systems/texlive/${TL_YEAR}/tlnet-final"
@@ -54,4 +54,4 @@ RUN fc-cache -fv && luaotfload-tool -u -v
 RUN apk add --no-cache gcc build-base qpdf ttf-dejavu
 RUN git config --global --add safe.directory /srv%
 
-RUN tlmgr install extsizes fontawesome menukeys relsize
+RUN tlmgr install extsizes fontawesome relsize sectsty stix multirow cprotect bigfoot accents esint vwcol lineno duckuments
