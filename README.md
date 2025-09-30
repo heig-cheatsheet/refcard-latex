@@ -8,7 +8,7 @@ Cette carte de référence est destinée à accompagner l'étudiant durant ses �
 
 La carte de référence est une feuille A4 recto-verso supposément imprimée sur du papier 120g satiné orange clair :
 
-[![Preview](../../releases/download/latest/preview.png)](../../releases/latest/download/refcard.pdf)
+[![Preview](https://github.com/heig-cheatsheet/refcard-latex/releases/latest/download/preview.png)](https://github.com/heig-cheatsheet/refcard-latex/releases/latest/download/refcard.pdf)
 
 L'impression via la reprographie de l'école peut être demandée avec la description suivante:
 
